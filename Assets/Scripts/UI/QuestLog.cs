@@ -13,8 +13,28 @@ namespace GameStart.UI
         };
 
         public event Action<int> ObjectiveChanged;
+        public event Action<int> QuestAdded;
 
         public IReadOnlyList<QuestObjective> Objectives => objectives;
+
+        public bool HasQuest(string description)
+        {
+            foreach (QuestObjective objective in objectives)
+            {
+                if (objective.Description == description)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void AddQuest(QuestObjective objective)
+        {
+            objectives.Add(objective);
+            QuestAdded?.Invoke(objectives.Count - 1);
+        }
 
         public void AddProgress(int objectiveIndex, int amount)
         {
