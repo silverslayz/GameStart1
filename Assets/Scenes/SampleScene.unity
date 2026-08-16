@@ -543,7 +543,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &649300969
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -808,11 +808,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81100ad7c9fadd64893ea26996ba232c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameStart.CameraSystems.CameraZoomController
-  zoomSpeed: 5
+  zoomSpeed: 60
   minOrthographicSize: 3
   maxOrthographicSize: 12
   minFieldOfView: 20
   maxFieldOfView: 70
+  minOrbitRadius: 2
+  maxOrbitRadius: 12
 --- !u!114 &1715887101
 MonoBehaviour:
   m_ObjectHideFlags: 0
