@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace GameStart.Player
@@ -11,6 +12,8 @@ namespace GameStart.Player
 
         private float regenDelayTimer;
 
+        public event Action<float, float> StaminaChanged;
+
         public float MaxStamina => maxStamina;
         public float CurrentStamina { get; private set; }
         public bool IsExhausted => CurrentStamina <= 0f;
@@ -22,8 +25,14 @@ namespace GameStart.Player
 
         public void Drain(float deltaTime)
         {
+            float previous = CurrentStamina;
             CurrentStamina = Mathf.Max(0f, CurrentStamina - drainPerSecond * deltaTime);
             regenDelayTimer = regenDelay;
+
+            if (!Mathf.Approximately(previous, CurrentStamina))
+            {
+                StaminaChanged?.Invoke(CurrentStamina, maxStamina);
+            }
         }
 
         public void Regen(float deltaTime)
@@ -34,7 +43,13 @@ namespace GameStart.Player
                 return;
             }
 
+            float previous = CurrentStamina;
             CurrentStamina = Mathf.Min(maxStamina, CurrentStamina + regenPerSecond * deltaTime);
+
+            if (!Mathf.Approximately(previous, CurrentStamina))
+            {
+                StaminaChanged?.Invoke(CurrentStamina, maxStamina);
+            }
         }
     }
 }
