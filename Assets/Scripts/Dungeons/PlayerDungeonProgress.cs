@@ -15,6 +15,11 @@ namespace GameStart.Dungeons
 
         public DungeonDefinition CurrentDungeon => DungeonRegistry.Get(Mathf.Min(CurrentDungeonIndex, DungeonRegistry.TotalDungeons - 1));
 
+        public void ResetProgress()
+        {
+            ClearedCount = 0;
+        }
+
         public bool TryEnterCurrentDungeon(PlayerSkills skills)
         {
             if (HasClearedAll || skills == null)

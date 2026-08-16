@@ -10,6 +10,11 @@ namespace GameStart.Class
         public PlayerClassType SelectedClass { get; private set; }
         public bool HasSelectedClass { get; private set; }
 
+        public void ResetSelection()
+        {
+            HasSelectedClass = false;
+        }
+
         public void SelectClass(PlayerClassType classType)
         {
             SelectedClass = classType;

@@ -11,6 +11,7 @@ namespace GameStart.Skills
 
         public event Action<SkillType, float, int> SkillXpChanged;
         public event Action<SkillType, int> SkillLeveledUp;
+        public event Action AllSkillsReset;
 
         private PlayerSkillTree skillTree;
 
@@ -36,6 +37,12 @@ namespace GameStart.Skills
             }
 
             return true;
+        }
+
+        public void ResetAllSkills()
+        {
+            xpBySkill.Clear();
+            AllSkillsReset?.Invoke();
         }
 
         public void AddXp(SkillType skill, float amount)

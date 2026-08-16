@@ -52,6 +52,21 @@ namespace GameStart.Class
             Cursor.visible = true;
         }
 
+        public void RestartForNewRun()
+        {
+            if (playerHud != null)
+            {
+                playerHud.SetActive(false);
+            }
+
+            if (confirmationPanel != null)
+            {
+                confirmationPanel.SetActive(false);
+            }
+
+            ShowPanel();
+        }
+
         public void ChooseWarrior() => Choose(PlayerClassType.Warrior);
         public void ChooseRanger() => Choose(PlayerClassType.Ranger);
         public void ChooseMage() => Choose(PlayerClassType.Mage);

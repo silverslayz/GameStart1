@@ -38,6 +38,13 @@ namespace GameStart.Class
             }
         }
 
+        public void Clear()
+        {
+            items.Clear();
+            weight?.ResetWeight();
+            ItemsChanged?.Invoke(items);
+        }
+
         public void AddItem(GearItem item)
         {
             items.Add(item);
