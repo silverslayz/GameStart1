@@ -22,6 +22,7 @@ namespace GameStart.Player
 
         private CharacterController controller;
         private PlayerStamina stamina;
+        private PlayerWeight weight;
 
         private Vector2 moveInput;
         private bool sprintHeld;
@@ -34,6 +35,7 @@ namespace GameStart.Player
         {
             controller = GetComponent<CharacterController>();
             stamina = GetComponent<PlayerStamina>();
+            weight = GetComponent<PlayerWeight>();
 
             if (cameraTransform == null && Camera.main != null)
             {
@@ -59,6 +61,10 @@ namespace GameStart.Player
 
             bool wantsSprint = sprintHeld && moveDirection.sqrMagnitude > 0f && !stamina.IsExhausted;
             float speed = wantsSprint ? sprintSpeed : (sprintHeld ? jogSpeed : walkSpeed);
+            if (weight != null)
+            {
+                speed *= weight.SpeedMultiplier;
+            }
 
             if (wantsSprint)
             {
