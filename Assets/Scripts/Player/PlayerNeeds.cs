@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using GameStart.Skills;
 
 namespace GameStart.Player
 {
@@ -11,8 +12,10 @@ namespace GameStart.Player
         [SerializeField] private float hungerDepletePerSecond = 0.5f;
         [SerializeField] private float thirstDepletePerSecond = 0.8f;
         [SerializeField] private float starvingDamagePerSecond = 2f;
+        [SerializeField] private float survivalXpPerConsumeAmount = 0.5f;
 
         private PlayerHealth health;
+        private PlayerSkills skills;
 
         public event Action<float, float> HungerChanged;
         public event Action<float, float> ThirstChanged;
@@ -26,6 +29,7 @@ namespace GameStart.Player
         private void Awake()
         {
             health = GetComponent<PlayerHealth>();
+            skills = GetComponent<PlayerSkills>();
             CurrentHunger = maxHunger;
             CurrentThirst = maxThirst;
         }
@@ -49,6 +53,7 @@ namespace GameStart.Player
             }
 
             SetHunger(CurrentHunger + amount);
+            skills?.AddXp(SkillType.Survival, amount * survivalXpPerConsumeAmount);
         }
 
         public void Drink(float amount)
@@ -59,6 +64,7 @@ namespace GameStart.Player
             }
 
             SetThirst(CurrentThirst + amount);
+            skills?.AddXp(SkillType.Survival, amount * survivalXpPerConsumeAmount);
         }
 
         private void SetHunger(float value)
