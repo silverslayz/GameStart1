@@ -7,7 +7,7 @@ namespace GameStart.CameraSystems
     [RequireComponent(typeof(CinemachineCamera))]
     public class CameraZoomController : MonoBehaviour
     {
-        [SerializeField] private float zoomSpeed = 35f;
+        [SerializeField] private float zoomSpeed = 65f;
         [SerializeField] private float minOrthographicSize = 3f;
         [SerializeField] private float maxOrthographicSize = 12f;
         [SerializeField] private float minFieldOfView = 20f;
