@@ -12,6 +12,7 @@ namespace GameStart.Player
         [SerializeField] private float jogSpeed = 5.5f;
         [SerializeField] private float sprintSpeed = 8f;
         [SerializeField] private float swimSpeed = 4.5f;
+        [SerializeField] private float crouchSpeed = 2f;
 
         [Header("Jump & Gravity")]
         [SerializeField] private float jumpHeight = 1.2f;
@@ -26,8 +27,11 @@ namespace GameStart.Player
 
         private Vector2 moveInput;
         private bool sprintHeld;
+        private bool crouchHeld;
         private bool jumpRequested;
         private bool isSwimming;
+
+        public bool IsCrouching => crouchHeld;
 
         private Vector3 verticalVelocity;
 
@@ -59,8 +63,17 @@ namespace GameStart.Player
         {
             Vector3 moveDirection = CameraRelativeDirection(moveInput);
 
-            bool wantsSprint = sprintHeld && moveDirection.sqrMagnitude > 0f && !stamina.IsExhausted;
-            float speed = wantsSprint ? sprintSpeed : (sprintHeld ? jogSpeed : walkSpeed);
+            bool wantsSprint = !crouchHeld && sprintHeld && moveDirection.sqrMagnitude > 0f && !stamina.IsExhausted;
+            float speed;
+            if (crouchHeld)
+            {
+                speed = crouchSpeed;
+            }
+            else
+            {
+                speed = wantsSprint ? sprintSpeed : (sprintHeld ? jogSpeed : walkSpeed);
+            }
+
             if (weight != null)
             {
                 speed *= weight.SpeedMultiplier;
@@ -154,6 +167,11 @@ namespace GameStart.Player
         public void OnSprint(InputValue value)
         {
             sprintHeld = value.isPressed;
+        }
+
+        public void OnCrouch(InputValue value)
+        {
+            crouchHeld = value.isPressed;
         }
 
         public void OnJump(InputValue value)

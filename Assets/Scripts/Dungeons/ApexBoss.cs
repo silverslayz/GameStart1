@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
+using GameStart.Combat;
 using GameStart.Player;
 using GameStart.Skills;
 using GameStart.UI;
 
 namespace GameStart.Dungeons
 {
-    public class ApexBoss : MonoBehaviour
+    public class ApexBoss : MonoBehaviour, IDamageable
     {
         [SerializeField] private string bossName = "Apex Boss";
         [SerializeField] private float maxHealth = 100f;
