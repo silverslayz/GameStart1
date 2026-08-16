@@ -56,6 +56,12 @@ namespace GameStart.Player
             skills?.AddXp(SkillType.Survival, amount * survivalXpPerConsumeAmount);
         }
 
+        public void RestoreFull()
+        {
+            SetHunger(maxHunger);
+            SetThirst(maxThirst);
+        }
+
         public void Drink(float amount)
         {
             if (amount <= 0f)
