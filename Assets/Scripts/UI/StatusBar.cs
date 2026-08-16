@@ -8,14 +8,11 @@ namespace GameStart.UI
     {
         private Image fillImage;
 
-        private void Awake()
-        {
-            fillImage = GetComponent<Image>();
-        }
+        private Image FillImage => fillImage != null ? fillImage : (fillImage = GetComponent<Image>());
 
         public void SetValue(float current, float max)
         {
-            fillImage.fillAmount = max > 0f ? Mathf.Clamp01(current / max) : 0f;
+            FillImage.fillAmount = max > 0f ? Mathf.Clamp01(current / max) : 0f;
         }
     }
 }
