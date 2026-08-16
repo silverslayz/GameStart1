@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -10,7 +11,9 @@ namespace GameStart.UI
         [SerializeField] private Transform objectivesContainer;
         [SerializeField] private QuestLog questLog;
 
-        private Text[] objectiveRows;
+        private const float RowHeight = 28f;
+
+        private readonly List<Text> objectiveRows = new List<Text>();
         private bool isOpen;
 
         private void Start()
@@ -23,6 +26,7 @@ namespace GameStart.UI
             if (questLog != null)
             {
                 questLog.ObjectiveChanged += OnObjectiveChanged;
+                questLog.QuestAdded += OnQuestAdded;
             }
         }
 
@@ -31,6 +35,7 @@ namespace GameStart.UI
             if (questLog != null)
             {
                 questLog.ObjectiveChanged -= OnObjectiveChanged;
+                questLog.QuestAdded -= OnQuestAdded;
             }
         }
 
@@ -53,27 +58,35 @@ namespace GameStart.UI
                 return;
             }
 
-            objectiveRows = new Text[questLog.Objectives.Count];
-
             for (int i = 0; i < questLog.Objectives.Count; i++)
             {
-                GameObject rowGo = new GameObject("Objective_" + i, typeof(RectTransform));
-                rowGo.transform.SetParent(objectivesContainer, false);
-                var rt = rowGo.GetComponent<RectTransform>();
-                rt.anchorMin = new Vector2(0f, 1f);
-                rt.anchorMax = new Vector2(0f, 1f);
-                rt.pivot = new Vector2(0f, 1f);
-                rt.anchoredPosition = new Vector2(0f, -i * 28f);
-                rt.sizeDelta = new Vector2(380f, 26f);
-
-                var text = rowGo.AddComponent<Text>();
-                text.fontSize = 16;
-                text.color = Color.white;
-                text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-
-                objectiveRows[i] = text;
-                RefreshRow(i);
+                AddRow(i);
             }
+        }
+
+        private void OnQuestAdded(int index)
+        {
+            AddRow(index);
+        }
+
+        private void AddRow(int index)
+        {
+            GameObject rowGo = new GameObject("Objective_" + index, typeof(RectTransform));
+            rowGo.transform.SetParent(objectivesContainer, false);
+            var rt = rowGo.GetComponent<RectTransform>();
+            rt.anchorMin = new Vector2(0f, 1f);
+            rt.anchorMax = new Vector2(0f, 1f);
+            rt.pivot = new Vector2(0f, 1f);
+            rt.anchoredPosition = new Vector2(0f, -index * RowHeight);
+            rt.sizeDelta = new Vector2(380f, 26f);
+
+            var text = rowGo.AddComponent<Text>();
+            text.fontSize = 16;
+            text.color = Color.white;
+            text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+
+            objectiveRows.Add(text);
+            RefreshRow(index);
         }
 
         private void OnObjectiveChanged(int index)
@@ -83,7 +96,7 @@ namespace GameStart.UI
 
         private void RefreshRow(int index)
         {
-            if (objectiveRows == null || index < 0 || index >= objectiveRows.Length || objectiveRows[index] == null)
+            if (index < 0 || index >= objectiveRows.Count || objectiveRows[index] == null)
             {
                 return;
             }
