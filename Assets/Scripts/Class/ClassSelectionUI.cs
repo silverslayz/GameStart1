@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using GameStart.Player;
 
 namespace GameStart.Class
 {
@@ -12,6 +13,7 @@ namespace GameStart.Class
         [SerializeField] private Text confirmationLabel;
         [SerializeField] private GameObject playerHud;
         [SerializeField] private float confirmationDuration = 1.5f;
+        [SerializeField] private Toggle hardModeToggle;
 
         [SerializeField] private PlayerClassSelection classSelection;
         [SerializeField] private PlayerInput playerInput;
@@ -56,6 +58,7 @@ namespace GameStart.Class
 
         private void Choose(PlayerClassType classType)
         {
+            GameSessionSettings.HardModeEnabled = hardModeToggle != null && hardModeToggle.isOn;
             classSelection.SelectClass(classType);
             panel.SetActive(false);
             StartCoroutine(ShowConfirmationThenEnterGame(classType));
