@@ -39,6 +39,12 @@ namespace GameStart.Class
             }
         }
 
+        public void ResetTree()
+        {
+            unlockedSkills.Clear();
+            IsLocked = false;
+        }
+
         private void LockInBaseTree(PlayerClassType classType)
         {
             if (IsLocked)

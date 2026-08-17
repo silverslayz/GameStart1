@@ -25,6 +25,12 @@ namespace GameStart.Player
             SetWeight(CurrentWeight + amount);
         }
 
+        public void ResetWeight()
+        {
+            CurrentWeight = 0f;
+            WeightChanged?.Invoke(CurrentWeight, maxCapacity);
+        }
+
         public void RemoveWeight(float amount)
         {
             if (amount <= 0f)

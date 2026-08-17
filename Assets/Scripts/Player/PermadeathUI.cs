@@ -10,6 +10,14 @@ namespace GameStart.Player
         [SerializeField] private Text messageText;
         [SerializeField] private PlayerInput playerInput;
 
+        public void Hide()
+        {
+            if (panel != null)
+            {
+                panel.SetActive(false);
+            }
+        }
+
         public void Show(string message)
         {
             if (panel == null)

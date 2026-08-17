@@ -27,6 +27,12 @@ namespace GameStart.Economy
             GemsChanged?.Invoke(Gems);
         }
 
+        public void ResetGems()
+        {
+            Gems = 0;
+            GemsChanged?.Invoke(Gems);
+        }
+
         public bool TrySpendGems(int amount)
         {
             if (amount <= 0 || Gems < amount)
