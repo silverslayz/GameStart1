@@ -6,7 +6,12 @@ namespace GameStart.Persistence
 {
     public static class SaveSystem
     {
-        public const int CurrentVersion = 1;
+        // 1: original schema.
+        // 2: added SaveData.equipment.
+        public const int CurrentVersion = 2;
+
+        /// <summary>Oldest schema this build can still read by migrating it forward.</summary>
+        public const int MinSupportedVersion = 1;
 
         private const string FileName = "aetherfall_save.json";
         private const string TempFileName = "aetherfall_save.json.tmp";
@@ -67,15 +72,16 @@ namespace GameStart.Persistence
                 string json = File.ReadAllText(SavePath);
                 SaveData parsed = JsonUtility.FromJson<SaveData>(json);
 
-                // No migration path exists yet - any version mismatch is rejected rather than
-                // risking a silent partial load (JsonUtility zero-fills missing fields instead
-                // of failing). Add migration steps here once CurrentVersion moves past 1.
-                if (parsed == null || parsed.version != CurrentVersion)
+                // Older schemas are migrated forward; newer ones are rejected, since a build
+                // can't know what a future version added. Rejecting an older save outright
+                // would strand the player's progress, which is worse than a partial load.
+                if (parsed == null || parsed.version < MinSupportedVersion || parsed.version > CurrentVersion)
                 {
-                    Debug.LogWarning($"SaveSystem: save file failed validation (version {(parsed != null ? parsed.version.ToString() : "unreadable")}, expected {CurrentVersion}).");
+                    Debug.LogWarning($"SaveSystem: save file failed validation (version {(parsed != null ? parsed.version.ToString() : "unreadable")}, supported {MinSupportedVersion}-{CurrentVersion}).");
                     return false;
                 }
 
+                Migrate(parsed);
                 data = parsed;
                 return true;
             }
@@ -84,6 +90,27 @@ namespace GameStart.Persistence
                 Debug.LogError($"SaveSystem.Load failed: {e}");
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Brings an older save up to the current schema in place.
+        ///
+        /// JsonUtility leaves fields absent from the JSON at their default, which for a list
+        /// can be null rather than the field initializer's empty list, so every collection is
+        /// null-guarded here instead of at each call site.
+        /// </summary>
+        private static void Migrate(SaveData data)
+        {
+            data.skillXp ??= new System.Collections.Generic.List<SkillXpEntry>();
+            data.hotbarSlots ??= new System.Collections.Generic.List<SavedSlot>();
+            data.mainSlots ??= new System.Collections.Generic.List<SavedSlot>();
+            data.questObjectives ??= new System.Collections.Generic.List<SavedObjective>();
+
+            // v1 -> v2: no equipment section. Nothing to convert; the player simply starts
+            // with empty gear slots, and their inventory is untouched.
+            data.equipment ??= new System.Collections.Generic.List<SavedEquipment>();
+
+            data.version = CurrentVersion;
         }
 
         public static void DeleteSave()

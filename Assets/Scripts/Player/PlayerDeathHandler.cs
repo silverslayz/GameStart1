@@ -1,4 +1,5 @@
 using UnityEngine;
+using GameStart.Flow;
 
 namespace GameStart.Player
 {
@@ -17,6 +18,9 @@ namespace GameStart.Player
             health = GetComponent<PlayerHealth>();
             needs = GetComponent<PlayerNeeds>();
             controller = GetComponent<CharacterController>();
+
+            // Lives on a scene canvas, so a prefab instance starts with this null.
+            permadeathUi = SceneLink.Resolve(permadeathUi);
         }
 
         private void OnEnable()

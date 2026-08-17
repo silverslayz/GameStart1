@@ -183,6 +183,33 @@ namespace GameStart.Class
             InventoryChanged?.Invoke();
         }
 
+        /// <summary>
+        /// Removes a single unit from a slot and hands it back, leaving the rest of the stack.
+        /// Used when moving one item into an equipment slot.
+        /// </summary>
+        public bool TakeOne(bool hotbar, int index, out GearItem item)
+        {
+            InventorySlot slot = GetSlot(hotbar, index);
+            if (slot == null || slot.IsEmpty)
+            {
+                item = default;
+                return false;
+            }
+
+            item = slot.Item;
+            slot.Count--;
+            if (slot.Count <= 0)
+            {
+                slot.Item = default;
+                slot.Count = 0;
+            }
+
+            weight?.RemoveWeight(item.Weight);
+            ItemsChanged?.Invoke(Items);
+            InventoryChanged?.Invoke();
+            return true;
+        }
+
         /// <summary>Restores a single slot's contents from saved data. Call FinishLoading() once all slots are set.</summary>
         public void LoadSlot(bool hotbar, int index, string itemName, float itemWeight, int count)
         {

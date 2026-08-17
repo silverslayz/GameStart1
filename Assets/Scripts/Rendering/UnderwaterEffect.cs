@@ -1,5 +1,6 @@
 using UnityEngine;
 using GameStart.Player;
+using GameStart.Flow;
 
 namespace GameStart.Rendering
 {
@@ -15,6 +16,10 @@ namespace GameStart.Rendering
 
         private void Awake()
         {
+            // The quad is parented to the camera, not the player, so a prefab instance
+            // starts with this null.
+            overlayRenderer = SceneLink.ResolveCameraOverlay(overlayRenderer, "UnderwaterOverlayQuad");
+
             if (overlayRenderer != null)
             {
                 materialInstance = overlayRenderer.material; // instances it

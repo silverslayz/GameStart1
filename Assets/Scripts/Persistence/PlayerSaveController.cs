@@ -17,8 +17,26 @@ namespace GameStart.Persistence
         [SerializeField] private PlayerDungeonProgress dungeonProgress;
         [SerializeField] private QuestLog questLog;
         [SerializeField] private PlayerHealth health;
+        [SerializeField] private PlayerEquipment equipment;
 
         public bool HasSave => SaveSystem.IsSaveValid();
+
+        /// <summary>
+        /// Resolved on demand rather than cached in Awake: the inventory screen adds this
+        /// component at runtime when a scene predates it, which can happen after our Awake.
+        /// </summary>
+        private PlayerEquipment Equipment
+        {
+            get
+            {
+                if (equipment == null)
+                {
+                    equipment = GetComponent<PlayerEquipment>();
+                }
+
+                return equipment;
+            }
+        }
 
         private void OnEnable()
         {
@@ -103,6 +121,26 @@ namespace GameStart.Persistence
                 }
             }
 
+            PlayerEquipment equip = Equipment;
+            if (equip != null)
+            {
+                foreach (EquipmentSlotType type in PlayerEquipment.AllSlots)
+                {
+                    if (!equip.IsEquipped(type))
+                    {
+                        continue;
+                    }
+
+                    GearItem worn = equip.GetEquipped(type);
+                    data.equipment.Add(new SavedEquipment
+                    {
+                        slot = type.ToString(),
+                        itemName = worn.Name,
+                        itemWeight = worn.Weight
+                    });
+                }
+            }
+
             if (currency != null)
             {
                 data.gems = currency.Gems;
@@ -166,6 +204,27 @@ namespace GameStart.Persistence
                 inventory.FinishLoading();
             }
 
+            // Must follow inventory.FinishLoading(): that call resets carried weight to zero
+            // before adding the bag, so restoring gear first would have it wiped straight out.
+            PlayerEquipment equip = Equipment;
+            if (equip != null)
+            {
+                foreach (EquipmentSlotType type in PlayerEquipment.AllSlots)
+                {
+                    equip.LoadSlot(type, null, 0f);
+                }
+
+                foreach (SavedEquipment saved in data.equipment)
+                {
+                    if (System.Enum.TryParse(saved.slot, out EquipmentSlotType type))
+                    {
+                        equip.LoadSlot(type, saved.itemName, saved.itemWeight);
+                    }
+                }
+
+                equip.FinishLoading();
+            }
+
             if (currency != null)
             {
                 currency.LoadGems(data.gems);
@@ -194,6 +253,14 @@ namespace GameStart.Persistence
 
             skills?.ResetAllSkills();
             inventory?.Clear();
+            // Without this a new run starts wearing the previous character's gear.
+            // Explicit null check rather than ?., so Unity's destroyed-object equality applies.
+            PlayerEquipment equip = Equipment;
+            if (equip != null)
+            {
+                equip.Clear();
+            }
+
             currency?.ResetGems();
             dungeonProgress?.ResetProgress();
         }

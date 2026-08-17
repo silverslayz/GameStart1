@@ -1,4 +1,5 @@
 using UnityEngine;
+using GameStart.Flow;
 
 namespace GameStart.UI
 {
@@ -9,6 +10,12 @@ namespace GameStart.UI
         [SerializeField] private int objectiveIndex;
 
         private bool hasFired;
+
+        private void Awake()
+        {
+            // Lives on a scene canvas, so a prefab instance starts with this null.
+            victorySequence = SceneLink.Resolve(victorySequence);
+        }
 
         private void OnEnable()
         {

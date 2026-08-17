@@ -6,6 +6,7 @@ using GameStart.Skills;
 using GameStart.UI;
 using GameStart.Audio;
 using GameStart.Narrative;
+using GameStart.Flow;
 
 namespace GameStart.Dungeons
 {
@@ -43,6 +44,15 @@ namespace GameStart.Dungeons
         private void Awake()
         {
             CurrentHealth = maxHealth;
+
+            // Resolved in Awake rather than OnEnable, which subscribes to dungeonProgress and
+            // runs immediately after. All of these live outside the boss, so a prefab can't
+            // serialize them.
+            dungeonProgress = SceneLink.Resolve(dungeonProgress);
+            playerSkills = SceneLink.Resolve(playerSkills);
+            victorySequence = SceneLink.Resolve(victorySequence);
+            bestiary = SceneLink.Resolve(bestiary);
+            targetPlayer = SceneLink.Resolve(targetPlayer);
         }
 
         private void OnEnable()

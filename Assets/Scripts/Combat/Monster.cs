@@ -5,6 +5,7 @@ using GameStart.Economy;
 using GameStart.Gathering;
 using GameStart.UI;
 using GameStart.Audio;
+using GameStart.Flow;
 
 namespace GameStart.Combat
 {
@@ -35,6 +36,13 @@ namespace GameStart.Combat
         private void Awake()
         {
             CurrentHealth = maxHealth;
+
+            // Every one of these lives on the player, which a prefab can't reference. A
+            // spawned monster resolves them itself so its drops and quest/bestiary hooks work.
+            playerCurrency = SceneLink.Resolve(playerCurrency);
+            playerResources = SceneLink.Resolve(playerResources);
+            questLog = SceneLink.Resolve(questLog);
+            bestiary = SceneLink.Resolve(bestiary);
         }
 
         public void TakeDamage(float amount)
