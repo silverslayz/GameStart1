@@ -13,26 +13,38 @@ namespace GameStart.UI
         [SerializeField] private bool isHotbarSlot;
         [SerializeField] private int slotIndex;
 
+        private static readonly Color EmptyGlow = new Color(0.2f, 0.55f, 0.7f, 0.25f);
+        private static readonly Color FilledGlow = new Color(0.35f, 0.85f, 1f, 0.95f);
+        private static readonly Color EmptyBackground = new Color(0.08f, 0.12f, 0.2f, 0.35f);
+        private static readonly Color FilledBackground = new Color(0.1f, 0.18f, 0.3f, 0.75f);
+
         private static GameObject dragGhost;
         private static InventorySlotUI dragSource;
 
+        private Image background;
+        private Outline glowOutline;
+
+        private void Awake()
+        {
+            background = GetComponent<Image>();
+            glowOutline = GetComponent<Outline>();
+        }
+
         public void SetSlot(InventorySlot slot)
         {
-            if (slot == null || slot.IsEmpty)
+            bool isEmpty = slot == null || slot.IsEmpty;
+
+            if (nameText != null) nameText.text = isEmpty ? "" : slot.Item.Name;
+            if (countText != null) countText.text = !isEmpty && slot.Count > 1 ? $"x{slot.Count}" : "";
+
+            if (background != null)
             {
-                if (nameText != null) nameText.text = "";
-                if (countText != null) countText.text = "";
-                return;
+                background.color = isEmpty ? EmptyBackground : FilledBackground;
             }
 
-            if (nameText != null)
+            if (glowOutline != null)
             {
-                nameText.text = slot.Item.Name;
-            }
-
-            if (countText != null)
-            {
-                countText.text = slot.Count > 1 ? $"x{slot.Count}" : "";
+                glowOutline.effectColor = isEmpty ? EmptyGlow : FilledGlow;
             }
         }
 

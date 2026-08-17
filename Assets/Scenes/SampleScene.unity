@@ -3907,6 +3907,7 @@ GameObject:
   - component: {fileID: 202243715}
   - component: {fileID: 202243717}
   - component: {fileID: 202243716}
+  - component: {fileID: 202243718}
   m_Layer: 0
   m_Name: Panel
   m_TagString: Untagged
@@ -3948,7 +3949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.03, g: 0.05, b: 0.09, a: 0.94}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3973,6 +3974,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 202243714}
   m_CullTransparentMesh: 1
+--- !u!114 &202243718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202243714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0.3, g: 0.85, b: 1, a: 0.8}
+  m_EffectDistance: {x: 1.5, y: -1.5}
+  m_UseGraphicAlpha: 1
 --- !u!21 &212409905
 Material:
   serializedVersion: 8
@@ -4602,7 +4618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 20}
+  m_AnchoredPosition: {x: -107, y: 27}
   m_SizeDelta: {x: 366, y: 56}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &240489884
@@ -6234,6 +6250,7 @@ GameObject:
   - component: {fileID: 350110323}
   - component: {fileID: 350110322}
   - component: {fileID: 350110321}
+  - component: {fileID: 350110324}
   m_Layer: 0
   m_Name: HotbarSlot_0
   m_TagString: Untagged
@@ -6317,6 +6334,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 350110319}
   m_CullTransparentMesh: 1
+--- !u!114 &350110324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350110319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &351865694
 GameObject:
   m_ObjectHideFlags: 0
@@ -7829,6 +7861,7 @@ GameObject:
   - component: {fileID: 441949766}
   - component: {fileID: 441949765}
   - component: {fileID: 441949764}
+  - component: {fileID: 441949767}
   m_Layer: 0
   m_Name: HotbarSlot_4
   m_TagString: Untagged
@@ -7912,6 +7945,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 441949762}
   m_CullTransparentMesh: 1
+--- !u!114 &441949767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441949762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &448376128
 GameObject:
   m_ObjectHideFlags: 0
@@ -7948,7 +7996,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 606, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &452068848
@@ -9194,6 +9242,7 @@ GameObject:
   - component: {fileID: 535678833}
   - component: {fileID: 535678832}
   - component: {fileID: 535678834}
+  - component: {fileID: 535678835}
   m_Layer: 0
   m_Name: Slot_13
   m_TagString: Untagged
@@ -9277,6 +9326,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 13
+--- !u!114 &535678835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535678830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &536195108
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9802,6 +9866,7 @@ GameObject:
   - component: {fileID: 554805052}
   - component: {fileID: 554805051}
   - component: {fileID: 554805053}
+  - component: {fileID: 554805054}
   m_Layer: 0
   m_Name: Slot_4
   m_TagString: Untagged
@@ -9885,6 +9950,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 4
+--- !u!114 &554805054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554805049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &558554032
 GameObject:
   m_ObjectHideFlags: 0
@@ -9927,6 +10007,7 @@ MonoBehaviour:
   attackDamage: 8
   attackInterval: 1.5
   attackRange: 4
+  analyzedAttackDamageMultiplier: 0.75
 --- !u!23 &558554034
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11490,6 +11571,7 @@ GameObject:
   - component: {fileID: 649636684}
   - component: {fileID: 649636683}
   - component: {fileID: 649636682}
+  - component: {fileID: 649636685}
   m_Layer: 0
   m_Name: HotbarSlot_2
   m_TagString: Untagged
@@ -11573,6 +11655,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 649636680}
   m_CullTransparentMesh: 1
+--- !u!114 &649636685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649636680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &651415423
 GameObject:
   m_ObjectHideFlags: 0
@@ -12310,6 +12407,7 @@ GameObject:
   - component: {fileID: 699336045}
   - component: {fileID: 699336044}
   - component: {fileID: 699336046}
+  - component: {fileID: 699336047}
   m_Layer: 0
   m_Name: Slot_12
   m_TagString: Untagged
@@ -12393,6 +12491,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 12
+--- !u!114 &699336047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699336042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &701859654
 GameObject:
   m_ObjectHideFlags: 0
@@ -13161,6 +13274,7 @@ GameObject:
   - component: {fileID: 747907219}
   - component: {fileID: 747907218}
   - component: {fileID: 747907220}
+  - component: {fileID: 747907221}
   m_Layer: 0
   m_Name: Slot_2
   m_TagString: Untagged
@@ -13244,6 +13358,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 2
+--- !u!114 &747907221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747907216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!21 &756715645
 Material:
   serializedVersion: 8
@@ -13861,6 +13990,7 @@ GameObject:
   - component: {fileID: 778499119}
   - component: {fileID: 778499118}
   - component: {fileID: 778499116}
+  - component: {fileID: 778499120}
   m_Layer: 0
   m_Name: Slot_19
   m_TagString: Untagged
@@ -13944,6 +14074,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 778499115}
   m_CullTransparentMesh: 1
+--- !u!114 &778499120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778499115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &779276554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14212,6 +14357,7 @@ GameObject:
   - component: {fileID: 800636133}
   - component: {fileID: 800636132}
   - component: {fileID: 800636134}
+  - component: {fileID: 800636135}
   m_Layer: 0
   m_Name: Slot_15
   m_TagString: Untagged
@@ -14295,6 +14441,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 15
+--- !u!114 &800636135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800636130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &804767478
 GameObject:
   m_ObjectHideFlags: 0
@@ -15704,6 +15865,7 @@ GameObject:
   - component: {fileID: 896423982}
   - component: {fileID: 896423981}
   - component: {fileID: 896423983}
+  - component: {fileID: 896423984}
   m_Layer: 0
   m_Name: Slot_18
   m_TagString: Untagged
@@ -15787,6 +15949,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 18
+--- !u!114 &896423984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896423979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &900945780
 GameObject:
   m_ObjectHideFlags: 0
@@ -15799,6 +15976,7 @@ GameObject:
   - component: {fileID: 900945783}
   - component: {fileID: 900945782}
   - component: {fileID: 900945784}
+  - component: {fileID: 900945785}
   m_Layer: 0
   m_Name: Slot_11
   m_TagString: Untagged
@@ -15882,6 +16060,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 11
+--- !u!114 &900945785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900945780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &902939917
 GameObject:
   m_ObjectHideFlags: 0
@@ -16071,6 +16264,7 @@ GameObject:
   - component: {fileID: 913284812}
   - component: {fileID: 913284811}
   - component: {fileID: 913284810}
+  - component: {fileID: 913284813}
   m_Layer: 0
   m_Name: HotbarSlot_3
   m_TagString: Untagged
@@ -16154,6 +16348,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 913284808}
   m_CullTransparentMesh: 1
+--- !u!114 &913284813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913284808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &914156522
 GameObject:
   m_ObjectHideFlags: 0
@@ -16515,6 +16724,7 @@ GameObject:
   - component: {fileID: 921258292}
   - component: {fileID: 921258291}
   - component: {fileID: 921258293}
+  - component: {fileID: 921258294}
   m_Layer: 0
   m_Name: Slot_9
   m_TagString: Untagged
@@ -16598,6 +16808,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 9
+--- !u!114 &921258294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921258289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &922547066
 GameObject:
   m_ObjectHideFlags: 0
@@ -16689,6 +16914,7 @@ GameObject:
   - component: {fileID: 928565711}
   - component: {fileID: 928565710}
   - component: {fileID: 928565712}
+  - component: {fileID: 928565713}
   m_Layer: 0
   m_Name: Slot_1
   m_TagString: Untagged
@@ -16772,6 +16998,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 1
+--- !u!114 &928565713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928565708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &939183981
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17073,6 +17314,7 @@ GameObject:
   - component: {fileID: 964060589}
   - component: {fileID: 964060588}
   - component: {fileID: 964060590}
+  - component: {fileID: 964060591}
   m_Layer: 0
   m_Name: Slot_5
   m_TagString: Untagged
@@ -17156,6 +17398,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 5
+--- !u!114 &964060591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964060586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &970279179
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18654,6 +18911,7 @@ GameObject:
   - component: {fileID: 1052021934}
   - component: {fileID: 1052021933}
   - component: {fileID: 1052021932}
+  - component: {fileID: 1052021935}
   m_Layer: 0
   m_Name: HotbarSlot_1
   m_TagString: Untagged
@@ -18737,6 +18995,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1052021930}
   m_CullTransparentMesh: 1
+--- !u!114 &1052021935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052021930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &1052342790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21468,6 +21741,7 @@ GameObject:
   - component: {fileID: 1252401784}
   - component: {fileID: 1252401783}
   - component: {fileID: 1252401785}
+  - component: {fileID: 1252401786}
   m_Layer: 0
   m_Name: Slot_7
   m_TagString: Untagged
@@ -21551,6 +21825,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 7
+--- !u!114 &1252401786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252401781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1265425762
 GameObject:
   m_ObjectHideFlags: 0
@@ -22667,6 +22956,7 @@ GameObject:
   - component: {fileID: 1365620615}
   - component: {fileID: 1365620614}
   - component: {fileID: 1365620616}
+  - component: {fileID: 1365620617}
   m_Layer: 0
   m_Name: Slot_8
   m_TagString: Untagged
@@ -22750,6 +23040,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 8
+--- !u!114 &1365620617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365620612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!21 &1367427250
 Material:
   serializedVersion: 8
@@ -25479,6 +25784,7 @@ GameObject:
   - component: {fileID: 1490796620}
   - component: {fileID: 1490796619}
   - component: {fileID: 1490796621}
+  - component: {fileID: 1490796622}
   m_Layer: 0
   m_Name: Slot_17
   m_TagString: Untagged
@@ -25562,6 +25868,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 17
+--- !u!114 &1490796622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490796617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1493502485
 GameObject:
   m_ObjectHideFlags: 0
@@ -26328,6 +26649,7 @@ GameObject:
   - component: {fileID: 1560202171}
   - component: {fileID: 1560202170}
   - component: {fileID: 1560202169}
+  - component: {fileID: 1560202172}
   m_Layer: 0
   m_Name: HotbarSlot_5
   m_TagString: Untagged
@@ -26411,6 +26733,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1560202167}
   m_CullTransparentMesh: 1
+--- !u!114 &1560202172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560202167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1563794143
 GameObject:
   m_ObjectHideFlags: 0
@@ -26502,6 +26839,7 @@ GameObject:
   - component: {fileID: 1567932321}
   - component: {fileID: 1567932320}
   - component: {fileID: 1567932322}
+  - component: {fileID: 1567932323}
   m_Layer: 0
   m_Name: Slot_16
   m_TagString: Untagged
@@ -26585,6 +26923,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 16
+--- !u!114 &1567932323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567932318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &1568163521
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27514,6 +27867,7 @@ GameObject:
   - component: {fileID: 1622695462}
   - component: {fileID: 1622695461}
   - component: {fileID: 1622695463}
+  - component: {fileID: 1622695464}
   m_Layer: 0
   m_Name: Slot_0
   m_TagString: Untagged
@@ -27597,6 +27951,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 0
+--- !u!114 &1622695464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622695459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1625251997
 GameObject:
   m_ObjectHideFlags: 0
@@ -28425,6 +28794,7 @@ GameObject:
   - component: {fileID: 1663927928}
   - component: {fileID: 1663927927}
   - component: {fileID: 1663927929}
+  - component: {fileID: 1663927930}
   m_Layer: 0
   m_Name: Slot_6
   m_TagString: Untagged
@@ -28508,6 +28878,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 6
+--- !u!114 &1663927930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663927925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1669799044
 GameObject:
   m_ObjectHideFlags: 0
@@ -29646,6 +30031,7 @@ GameObject:
   - component: {fileID: 1719356821}
   - component: {fileID: 1719356820}
   - component: {fileID: 1719356822}
+  - component: {fileID: 1719356823}
   m_Layer: 0
   m_Name: Slot_3
   m_TagString: Untagged
@@ -29729,6 +30115,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 3
+--- !u!114 &1719356823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719356818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1724581565
 GameObject:
   m_ObjectHideFlags: 0
@@ -30835,6 +31236,7 @@ GameObject:
   - component: {fileID: 1781149494}
   - component: {fileID: 1781149493}
   - component: {fileID: 1781149495}
+  - component: {fileID: 1781149496}
   m_Layer: 0
   m_Name: Slot_10
   m_TagString: Untagged
@@ -30918,6 +31320,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 10
+--- !u!114 &1781149496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781149491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1784023611
 GameObject:
   m_ObjectHideFlags: 0
@@ -33758,6 +34175,7 @@ GameObject:
   - component: {fileID: 1983967430}
   - component: {fileID: 1983967429}
   - component: {fileID: 1983967431}
+  - component: {fileID: 1983967432}
   m_Layer: 0
   m_Name: Slot_14
   m_TagString: Untagged
@@ -33841,6 +34259,21 @@ MonoBehaviour:
   inventory: {fileID: 649300975}
   isHotbarSlot: 0
   slotIndex: 14
+--- !u!114 &1983967432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983967427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &1986687306
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34486,7 +34919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.55, g: 0.9, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -34496,7 +34929,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 26
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -34506,7 +34939,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Inventory
+  m_Text: STATUS // INVENTORY
 --- !u!222 &2046354111
 CanvasRenderer:
   m_ObjectHideFlags: 0
