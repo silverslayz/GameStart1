@@ -30,6 +30,19 @@ namespace GameStart.UI
             return false;
         }
 
+        public int FindObjectiveIndex(string description)
+        {
+            for (int i = 0; i < objectives.Count; i++)
+            {
+                if (objectives[i].Description == description)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
         public void AddQuest(QuestObjective objective)
         {
             objectives.Add(objective);
