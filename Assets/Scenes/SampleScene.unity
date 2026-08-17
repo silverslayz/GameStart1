@@ -29511,7 +29511,7 @@ Terrain:
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
   m_DrawHeightmap: 1
-  m_DrawInstanced: 0
+  m_DrawInstanced: 1
   m_DrawTreesAndFoliage: 1
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
@@ -32164,44 +32164,56 @@ PrefabInstance:
       value: ResourceNode_IronOre
       objectReference: {fileID: 0}
     - target: {fileID: 5550441788450985450, guid: 35559748c5f6bb6479eaad5b606c9a1b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.6528808
+      objectReference: {fileID: 0}
+    - target: {fileID: 5550441788450985450, guid: 35559748c5f6bb6479eaad5b606c9a1b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.7360253
+      objectReference: {fileID: 0}
+    - target: {fileID: 5550441788450985450, guid: 35559748c5f6bb6479eaad5b606c9a1b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5779444
+      objectReference: {fileID: 0}
+    - target: {fileID: 5550441788450985450, guid: 35559748c5f6bb6479eaad5b606c9a1b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.64
+      value: -13.452
       objectReference: {fileID: 0}
     - target: {fileID: 5550441788450985450, guid: 35559748c5f6bb6479eaad5b606c9a1b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.07
+      value: 0.443
       objectReference: {fileID: 0}
     - target: {fileID: 5550441788450985450, guid: 35559748c5f6bb6479eaad5b606c9a1b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.03
+      value: 8.835
       objectReference: {fileID: 0}
     - target: {fileID: 5550441788450985450, guid: 35559748c5f6bb6479eaad5b606c9a1b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.5073182
       objectReference: {fileID: 0}
     - target: {fileID: 5550441788450985450, guid: 35559748c5f6bb6479eaad5b606c9a1b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.66105384
       objectReference: {fileID: 0}
     - target: {fileID: 5550441788450985450, guid: 35559748c5f6bb6479eaad5b606c9a1b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.43443617
       objectReference: {fileID: 0}
     - target: {fileID: 5550441788450985450, guid: 35559748c5f6bb6479eaad5b606c9a1b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.34190837
       objectReference: {fileID: 0}
     - target: {fileID: 5550441788450985450, guid: 35559748c5f6bb6479eaad5b606c9a1b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -104.578
       objectReference: {fileID: 0}
     - target: {fileID: 5550441788450985450, guid: 35559748c5f6bb6479eaad5b606c9a1b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 2.5610046
       objectReference: {fileID: 0}
     - target: {fileID: 5550441788450985450, guid: 35559748c5f6bb6479eaad5b606c9a1b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 64.645
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
