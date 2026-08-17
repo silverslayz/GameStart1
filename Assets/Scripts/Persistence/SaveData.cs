@@ -6,6 +6,7 @@ namespace GameStart.Persistence
     [Serializable]
     public class SaveData
     {
+        public int version = SaveSystem.CurrentVersion;
         public List<SkillXpEntry> skillXp = new List<SkillXpEntry>();
         public List<SavedSlot> hotbarSlots = new List<SavedSlot>();
         public List<SavedSlot> mainSlots = new List<SavedSlot>();

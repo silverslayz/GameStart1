@@ -18,7 +18,7 @@ namespace GameStart.Persistence
         [SerializeField] private QuestLog questLog;
         [SerializeField] private PlayerHealth health;
 
-        public bool HasSave => SaveSystem.SaveExists();
+        public bool HasSave => SaveSystem.IsSaveValid();
 
         private void OnEnable()
         {

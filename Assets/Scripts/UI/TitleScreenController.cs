@@ -14,7 +14,7 @@ namespace GameStart.UI
         {
             if (continueButton != null)
             {
-                continueButton.interactable = SaveSystem.SaveExists();
+                continueButton.interactable = SaveSystem.IsSaveValid();
             }
         }
 
