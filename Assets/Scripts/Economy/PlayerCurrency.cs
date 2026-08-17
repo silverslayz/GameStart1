@@ -27,6 +27,13 @@ namespace GameStart.Economy
             GemsChanged?.Invoke(Gems);
         }
 
+        /// <summary>Sets gems directly - for restoring saved progress.</summary>
+        public void LoadGems(int amount)
+        {
+            Gems = Mathf.Max(0, amount);
+            GemsChanged?.Invoke(Gems);
+        }
+
         public void ResetGems()
         {
             Gems = 0;

@@ -22,6 +22,14 @@ namespace GameStart.Skills
 
         public float GetXp(SkillType skill) => xpBySkill.TryGetValue(skill, out float xp) ? xp : 0f;
 
+        public IReadOnlyDictionary<SkillType, float> AllXp => xpBySkill;
+
+        /// <summary>Sets XP directly without going through skill-tree gating or firing level-up events - for restoring saved progress.</summary>
+        public void LoadXp(SkillType skill, float xp)
+        {
+            xpBySkill[skill] = xp;
+        }
+
         public int GetLevel(SkillType skill) => SkillLevelCurve.GetLevelForXp(GetXp(skill));
 
         public bool MeetsRequirement(SkillRequirement requirement) => GetLevel(requirement.Skill) >= requirement.RequiredLevel;

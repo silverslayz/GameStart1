@@ -49,6 +49,22 @@ namespace GameStart.UI
             QuestAdded?.Invoke(objectives.Count - 1);
         }
 
+        /// <summary>Restores an objective's progress from saved data, adding it if it doesn't already exist.</summary>
+        public void SetObjectiveProgress(string description, int targetCount, int currentCount)
+        {
+            int index = FindObjectiveIndex(description);
+            if (index >= 0)
+            {
+                objectives[index].TargetCount = targetCount;
+                objectives[index].CurrentCount = currentCount;
+                ObjectiveChanged?.Invoke(index);
+            }
+            else
+            {
+                AddQuest(new QuestObjective { Description = description, TargetCount = targetCount, CurrentCount = currentCount });
+            }
+        }
+
         public void AddProgress(int objectiveIndex, int amount)
         {
             if (objectiveIndex < 0 || objectiveIndex >= objectives.Count || amount <= 0)
