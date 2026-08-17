@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using GameStart.Dungeons;
+using GameStart.Flow;
 
 namespace GameStart.Rendering
 {
@@ -17,6 +18,11 @@ namespace GameStart.Rendering
 
         private void Awake()
         {
+            // Resolved here rather than in OnEnable, which subscribes to apexBoss and runs
+            // immediately after Awake.
+            overlayRenderer = SceneLink.ResolveCameraOverlay(overlayRenderer, "LightingTransitionQuad");
+            apexBoss = SceneLink.Resolve(apexBoss);
+
             if (overlayRenderer != null)
             {
                 materialInstance = overlayRenderer.material;

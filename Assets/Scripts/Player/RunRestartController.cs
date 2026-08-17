@@ -3,6 +3,7 @@ using GameStart.Class;
 using GameStart.Skills;
 using GameStart.Dungeons;
 using GameStart.Economy;
+using GameStart.Flow;
 
 namespace GameStart.Player
 {
@@ -33,6 +34,10 @@ namespace GameStart.Player
             classSelection = GetComponent<PlayerClassSelection>();
             dungeonProgress = GetComponent<PlayerDungeonProgress>();
             currency = GetComponent<PlayerCurrency>();
+
+            // Both live on scene canvases, so a prefab instance starts with these null.
+            permadeathUi = SceneLink.Resolve(permadeathUi);
+            classSelectionUi = SceneLink.Resolve(classSelectionUi);
         }
 
         public void RestartRun()
