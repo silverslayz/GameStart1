@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -5,7 +6,7 @@ using GameStart.Class;
 
 namespace GameStart.UI
 {
-    public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+    public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
     {
         [SerializeField] private Text nameText;
         [SerializeField] private Text countText;
@@ -13,39 +14,50 @@ namespace GameStart.UI
         [SerializeField] private bool isHotbarSlot;
         [SerializeField] private int slotIndex;
 
-        private static readonly Color EmptyGlow = new Color(0.2f, 0.55f, 0.7f, 0.25f);
-        private static readonly Color FilledGlow = new Color(0.35f, 0.85f, 1f, 0.95f);
-        private static readonly Color EmptyBackground = new Color(0.08f, 0.12f, 0.2f, 0.35f);
-        private static readonly Color FilledBackground = new Color(0.1f, 0.18f, 0.3f, 0.75f);
-
         private static GameObject dragGhost;
         private static InventorySlotUI dragSource;
 
+        /// <summary>Raised when any slot is clicked. The inventory screen uses this to drive selection.</summary>
+        public static event Action<InventorySlotUI> SlotClicked;
+
+        /// <summary>The slot currently being dragged, so equipment slots can accept the drop.</summary>
+        public static InventorySlotUI CurrentDragSource => dragSource;
+
+        /// <summary>Consumes the active drag so OnEndDrag won't also treat it as a drop-outside.</summary>
+        public static void ConsumeDrag()
+        {
+            dragSource = null;
+        }
+
         private Image background;
         private Outline glowOutline;
+        private Image[] frame;
+        private bool isSelected;
+        private bool isEmpty = true;
+
+        public bool IsHotbarSlot => isHotbarSlot;
+        public int SlotIndex => slotIndex;
+        public PlayerInventory Inventory => inventory;
 
         private void Awake()
         {
             background = GetComponent<Image>();
             glowOutline = GetComponent<Outline>();
+
+            // Built here rather than in the scene so hand-placed and code-built slots
+            // get the same border treatment.
+            frame = InventoryTheme.CreateFrame("Border", transform, InventoryTheme.SlotBorderEmpty);
+            ApplyVisualState();
         }
 
         public void SetSlot(InventorySlot slot)
         {
-            bool isEmpty = slot == null || slot.IsEmpty;
+            isEmpty = slot == null || slot.IsEmpty;
 
             if (nameText != null) nameText.text = isEmpty ? "" : slot.Item.Name;
             if (countText != null) countText.text = !isEmpty && slot.Count > 1 ? $"x{slot.Count}" : "";
 
-            if (background != null)
-            {
-                background.color = isEmpty ? EmptyBackground : FilledBackground;
-            }
-
-            if (glowOutline != null)
-            {
-                glowOutline.effectColor = isEmpty ? EmptyGlow : FilledGlow;
-            }
+            ApplyVisualState();
         }
 
         public void Configure(PlayerInventory targetInventory, bool hotbar, int index)
@@ -53,6 +65,45 @@ namespace GameStart.UI
             inventory = targetInventory;
             isHotbarSlot = hotbar;
             slotIndex = index;
+        }
+
+        /// <summary>Injects the label references for slots built at runtime rather than authored in a scene.</summary>
+        public void BindLabels(Text name, Text count)
+        {
+            nameText = name;
+            countText = count;
+        }
+
+        public void SetSelected(bool selected)
+        {
+            isSelected = selected;
+            ApplyVisualState();
+        }
+
+        private void ApplyVisualState()
+        {
+            if (background != null)
+            {
+                background.color = isEmpty ? InventoryTheme.SlotEmpty : InventoryTheme.SlotFilled;
+            }
+
+            Color border = isSelected
+                ? InventoryTheme.Accent
+                : (isEmpty ? InventoryTheme.SlotBorderEmpty : InventoryTheme.SlotBorderFilled);
+
+            InventoryTheme.SetFrameColor(frame, border);
+
+            if (glowOutline != null)
+            {
+                // Only the selected cell carries a glow; everything else stays flat so the
+                // grid reads as a calm field rather than a wall of highlights.
+                glowOutline.effectColor = isSelected ? InventoryTheme.AccentSoft : Color.clear;
+            }
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            SlotClicked?.Invoke(this);
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -70,9 +121,9 @@ namespace GameStart.UI
             dragGhost.transform.SetParent(rootCanvas.transform, false);
             dragGhost.transform.SetAsLastSibling();
             var ghostRt = dragGhost.GetComponent<RectTransform>();
-            ghostRt.sizeDelta = new Vector2(48, 48);
+            ghostRt.sizeDelta = new Vector2(InventoryTheme.SlotSize, InventoryTheme.SlotSize);
             var ghostImage = dragGhost.GetComponent<Image>();
-            ghostImage.color = new Color(1f, 1f, 1f, 0.6f);
+            ghostImage.color = new Color(InventoryTheme.Cyan.r, InventoryTheme.Cyan.g, InventoryTheme.Cyan.b, 0.45f);
             dragGhost.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
             ghostRt.position = eventData.position;
@@ -95,6 +146,8 @@ namespace GameStart.UI
             }
 
             // If we didn't land on a valid slot's OnDrop, treat this as "dropped outside the inventory" - discard the item.
+            // NOTE: this destroys the whole stack with no world pickup and fires inconsistently
+            // depending on what sits under the cursor. Tracked as #193 Part 2.
             if (dragSource == this && eventData.pointerEnter == null)
             {
                 inventory?.DropSlot(isHotbarSlot, slotIndex);
