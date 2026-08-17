@@ -32,7 +32,9 @@ def clear_scene():
                     pass
 
 
-def make_material(name, colour, roughness=0.85, metallic=0.0):
+def make_material(name, colour, roughness=0.85, metallic=0.0, emission=0.0):
+    """emission > 0 makes the surface self-lit. Needed for anything that should read
+    as glowing - a lit colour alone washes out to cream under bright key lighting."""
     mat = bpy.data.materials.new(name)
     mat.use_nodes = True
     bsdf = mat.node_tree.nodes.get("Principled BSDF")
@@ -41,6 +43,13 @@ def make_material(name, colour, roughness=0.85, metallic=0.0):
         bsdf.inputs["Roughness"].default_value = roughness
         if "Metallic" in bsdf.inputs:
             bsdf.inputs["Metallic"].default_value = metallic
+        if emission > 0.0:
+            for slot in ("Emission Color", "Emission"):
+                if slot in bsdf.inputs:
+                    bsdf.inputs[slot].default_value = colour
+                    break
+            if "Emission Strength" in bsdf.inputs:
+                bsdf.inputs["Emission Strength"].default_value = emission
     mat.diffuse_color = colour  # drives the workbench/viewport preview
     return mat
 
@@ -137,10 +146,18 @@ def render_preview(path, camera_distance=6.0, height=2.5, look_at_z=None):
     track.track_axis = "TRACK_NEGATIVE_Z"
     track.up_axis = "UP_Y"
 
+    # Standard rather than the filmic default, and modest energies: three suns totalling
+    # 7.5 clipped saturated colours to white. Orange (0.95, 0.42, 0.10) came out cream,
+    # which made materials look mis-authored when they were only over-exposed.
+    try:
+        scene.view_settings.view_transform = "Standard"
+    except TypeError:
+        pass
+
     for loc, rot, energy in (
-        ((3, -4, 5), (0.7, 0.2, 0.5), 4.0),
-        ((-4, -2, 2), (1.2, 0.0, -0.9), 1.5),
-        ((-2, 4, 3), (1.0, 0.0, 3.6), 2.0),
+        ((3, -4, 5), (0.7, 0.2, 0.5), 1.6),
+        ((-4, -2, 2), (1.2, 0.0, -0.9), 0.6),
+        ((-2, 4, 3), (1.0, 0.0, 3.6), 0.8),
     ):
         bpy.ops.object.light_add(type="SUN", location=loc)
         light = bpy.context.active_object
