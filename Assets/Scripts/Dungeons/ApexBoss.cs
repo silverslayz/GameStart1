@@ -26,6 +26,10 @@ namespace GameStart.Dungeons
         [SerializeField] private float attackInterval = 1.5f;
         [SerializeField] private float attackRange = 4f;
 
+        [Header("Bestiary")]
+        [Tooltip("Damage multiplier applied to this boss's retaliation once the player has analyzed its weakness - a clearer, more readable tell.")]
+        [SerializeField] private float analyzedAttackDamageMultiplier = 0.75f;
+
         public event Action<float, float> HealthChanged;
         public event Action BossDefeated;
 
@@ -89,7 +93,14 @@ namespace GameStart.Dungeons
             if (distance <= attackRange)
             {
                 lastAttackTime = Time.time;
-                targetPlayer.TakeDamage(attackDamage);
+
+                float damage = attackDamage;
+                if (bestiary != null && bestiary.IsWeaknessDiscovered(bossName))
+                {
+                    damage *= analyzedAttackDamageMultiplier;
+                }
+
+                targetPlayer.TakeDamage(damage);
             }
         }
 
