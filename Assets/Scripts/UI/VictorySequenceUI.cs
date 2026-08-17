@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using GameStart.Audio;
 
 namespace GameStart.UI
 {
@@ -38,6 +39,7 @@ namespace GameStart.UI
             }
 
             panel.SetActive(true);
+            SfxPlayer.Play(SfxLibrary.Victory);
 
             if (playerInput != null)
             {
@@ -55,6 +57,8 @@ namespace GameStart.UI
 
         public void Continue()
         {
+            SfxPlayer.Play(SfxLibrary.UIClick);
+
             if (panel != null)
             {
                 panel.SetActive(false);

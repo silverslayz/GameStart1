@@ -4,6 +4,7 @@ using UnityEngine;
 using GameStart.Economy;
 using GameStart.Gathering;
 using GameStart.UI;
+using GameStart.Audio;
 
 namespace GameStart.Combat
 {
@@ -42,6 +43,7 @@ namespace GameStart.Combat
 
             CurrentHealth = Mathf.Max(0f, CurrentHealth - amount);
             HealthChanged?.Invoke(CurrentHealth, maxHealth);
+            SfxPlayer.Play(SfxLibrary.DamageHit);
 
             if (CurrentHealth <= 0f)
             {
@@ -53,6 +55,7 @@ namespace GameStart.Combat
         {
             IsDefeated = true;
             Defeated?.Invoke();
+            SfxPlayer.Play(SfxLibrary.MonsterDefeat);
 
             int gemAmount = UnityEngine.Random.Range(minGemDrop, maxGemDrop + 1);
             playerCurrency?.AddGems(gemAmount);

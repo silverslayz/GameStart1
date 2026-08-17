@@ -4,6 +4,7 @@ using GameStart.Combat;
 using GameStart.Player;
 using GameStart.Skills;
 using GameStart.UI;
+using GameStart.Audio;
 
 namespace GameStart.Dungeons
 {
@@ -97,6 +98,7 @@ namespace GameStart.Dungeons
 
             CurrentHealth = Mathf.Max(0f, CurrentHealth - amount);
             HealthChanged?.Invoke(CurrentHealth, maxHealth);
+            SfxPlayer.Play(SfxLibrary.DamageHit);
 
             if (CurrentHealth <= 0f)
             {
@@ -108,6 +110,7 @@ namespace GameStart.Dungeons
         {
             IsDefeated = true;
             BossDefeated?.Invoke();
+            SfxPlayer.Play(SfxLibrary.MonsterDefeat);
 
             if (dungeonProgress != null)
             {

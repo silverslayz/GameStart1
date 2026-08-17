@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using GameStart.Player;
+using GameStart.Audio;
 
 namespace GameStart.Class
 {
@@ -73,6 +74,7 @@ namespace GameStart.Class
 
         private void Choose(PlayerClassType classType)
         {
+            SfxPlayer.Play(SfxLibrary.UIClick);
             GameSessionSettings.HardModeEnabled = hardModeToggle != null && hardModeToggle.isOn;
             classSelection.SelectClass(classType);
             panel.SetActive(false);
