@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using GameStart.Skills;
+using GameStart.Audio;
 
 namespace GameStart.Combat
 {
@@ -36,6 +37,7 @@ namespace GameStart.Combat
 
             lastSwingTime = Time.time;
             skills.AddXp(SkillType.Combat, combatXpPerSwing);
+            SfxPlayer.Play(SfxLibrary.AttackSwing);
 
             Collider[] hits = Physics.OverlapSphere(transform.position + transform.forward * (attackRange * 0.5f), attackRange * 0.5f);
             foreach (Collider hit in hits)

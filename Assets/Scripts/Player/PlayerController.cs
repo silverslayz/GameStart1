@@ -32,6 +32,7 @@ namespace GameStart.Player
         private bool isSwimming;
 
         public bool IsCrouching => crouchHeld;
+        public bool IsSwimming => isSwimming;
         public bool IsGrounded => controller.isGrounded;
         public float CurrentSpeed { get; private set; }
         public bool IsAscending => verticalVelocity.y > 0.01f && !controller.isGrounded;
