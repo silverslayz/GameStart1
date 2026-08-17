@@ -32,6 +32,10 @@ namespace GameStart.Player
         private bool isSwimming;
 
         public bool IsCrouching => crouchHeld;
+        public bool IsGrounded => controller.isGrounded;
+        public float CurrentSpeed { get; private set; }
+        public bool IsAscending => verticalVelocity.y > 0.01f && !controller.isGrounded;
+        public bool IsFalling => verticalVelocity.y < -0.01f && !controller.isGrounded;
 
         private Vector3 verticalVelocity;
 
@@ -108,6 +112,8 @@ namespace GameStart.Player
             Vector3 motion = moveDirection * speed + Vector3.up * verticalVelocity.y;
             controller.Move(motion * Time.deltaTime);
 
+            CurrentSpeed = moveDirection.sqrMagnitude > 0f ? speed : 0f;
+
             if (moveDirection.sqrMagnitude > 0f)
             {
                 transform.rotation = Quaternion.LookRotation(moveDirection, Vector3.up);
@@ -129,6 +135,8 @@ namespace GameStart.Player
             jumpRequested = false;
 
             controller.Move(moveDirection * swimSpeed * Time.deltaTime);
+
+            CurrentSpeed = moveDirection.sqrMagnitude > 0f ? swimSpeed : 0f;
 
             if (moveDirection.sqrMagnitude > 0f)
             {
