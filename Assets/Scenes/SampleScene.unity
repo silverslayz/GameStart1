@@ -3934,7 +3934,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 460, y: 460}
+  m_SizeDelta: {x: 500, y: 460}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &202243716
 MonoBehaviour:
@@ -30117,7 +30117,7 @@ MonoBehaviour:
       Enabled: 1
       Input:
         InputAction: {fileID: 982269218}
-        Gain: 1
+        Gain: 4
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -30128,7 +30128,7 @@ MonoBehaviour:
       Enabled: 1
       Input:
         InputAction: {fileID: 982269218}
-        Gain: -1
+        Gain: -4
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
