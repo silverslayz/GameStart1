@@ -13,6 +13,9 @@ namespace GameStart.Persistence
         public int gems;
         public int dungeonClearedCount;
         public List<SavedObjective> questObjectives = new List<SavedObjective>();
+
+        /// <summary>Added in version 2. Absent in version 1 saves, which load with no gear equipped.</summary>
+        public List<SavedEquipment> equipment = new List<SavedEquipment>();
     }
 
     [Serializable]
@@ -28,6 +31,15 @@ namespace GameStart.Persistence
         public string itemName;
         public float itemWeight;
         public int count;
+    }
+
+    [Serializable]
+    public class SavedEquipment
+    {
+        /// <summary>Stored as the enum name so reordering EquipmentSlotType can't silently reassign gear.</summary>
+        public string slot;
+        public string itemName;
+        public float itemWeight;
     }
 
     [Serializable]

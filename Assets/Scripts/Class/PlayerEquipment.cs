@@ -62,6 +62,14 @@ namespace GameStart.Class
                 equipped = new GearItem[count];
                 occupied = new bool[count];
             }
+
+            // Resolved here as well as in Awake: the save controller can restore gear before
+            // this component's Awake has run, and a null reference here would silently drop
+            // the equipped weight.
+            if (weight == null)
+            {
+                weight = GetComponent<PlayerWeight>();
+            }
         }
 
         public bool IsEquipped(EquipmentSlotType type)
@@ -134,6 +142,49 @@ namespace GameStart.Class
 
                 equipped[i] = default;
                 occupied[i] = false;
+            }
+
+            EquipmentChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Restores one slot from saved data without touching carried weight.
+        /// Call <see cref="FinishLoading"/> once the whole batch is in.
+        /// </summary>
+        public void LoadSlot(EquipmentSlotType type, string itemName, float itemWeight)
+        {
+            EnsureArrays();
+            int i = (int)type;
+
+            if (string.IsNullOrEmpty(itemName))
+            {
+                equipped[i] = default;
+                occupied[i] = false;
+                return;
+            }
+
+            equipped[i] = new GearItem(itemName, itemWeight);
+            occupied[i] = true;
+        }
+
+        /// <summary>
+        /// Adds equipped weight on top of what the inventory already accounted for, then
+        /// notifies listeners.
+        ///
+        /// Must run AFTER <see cref="PlayerInventory.FinishLoading"/>, which resets carried
+        /// weight to zero before adding the bag's contents. Running this first would have
+        /// that reset wipe the equipped weight straight back out.
+        /// </summary>
+        public void FinishLoading()
+        {
+            EnsureArrays();
+
+            for (int i = 0; i < equipped.Length; i++)
+            {
+                if (occupied[i])
+                {
+                    weight?.AddWeight(equipped[i].Weight);
+                }
             }
 
             EquipmentChanged?.Invoke();

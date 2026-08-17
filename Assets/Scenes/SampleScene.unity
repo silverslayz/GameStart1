@@ -11214,6 +11214,7 @@ GameObject:
   - component: {fileID: 649300997}
   - component: {fileID: 649300999}
   - component: {fileID: 649301000}
+  - component: {fileID: 649301001}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -11711,6 +11712,19 @@ MonoBehaviour:
   dungeonProgress: {fileID: 649300981}
   questLog: {fileID: 649300979}
   health: {fileID: 649300971}
+  equipment: {fileID: 0}
+--- !u!114 &649301001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649300963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc4425613dcefa242a27290e59e741a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameStart.Class.PlayerEquipment
 --- !u!1 &649636680
 GameObject:
   m_ObjectHideFlags: 0
@@ -24788,6 +24802,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameStart.UI.InventoryScreenUI
   inventory: {fileID: 0}
+  equipment: {fileID: 0}
+  cameraLookController: {fileID: 0}
 --- !u!4 &1442977941
 Transform:
   m_ObjectHideFlags: 0
