@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using GameStart.Flow;
 
 namespace GameStart.Player
 {
@@ -9,6 +10,11 @@ namespace GameStart.Player
         [SerializeField] private GameObject panel;
         [SerializeField] private Text messageText;
         [SerializeField] private PlayerInput playerInput;
+
+        public void ReturnToTitle()
+        {
+            SceneTransition.LoadScene(GameFlow.TitleSceneName);
+        }
 
         public void Hide()
         {

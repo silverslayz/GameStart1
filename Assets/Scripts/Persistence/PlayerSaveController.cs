@@ -5,6 +5,7 @@ using GameStart.Economy;
 using GameStart.Dungeons;
 using GameStart.UI;
 using GameStart.Player;
+using GameStart.Flow;
 
 namespace GameStart.Persistence
 {
@@ -47,8 +48,15 @@ namespace GameStart.Persistence
 
         private void Start()
         {
-            // No title/continue screen exists yet (see Epic #90) - until it does,
-            // auto-continue is the closest equivalent: resume a save if one exists.
+            if (GameFlow.PendingNewGame)
+            {
+                GameFlow.PendingNewGame = false;
+                StartNewGame();
+                return;
+            }
+
+            // No title screen existed when this was first written - auto-continue
+            // remains the fallback for entering play mode directly in this scene.
             if (HasSave)
             {
                 LoadNow();
