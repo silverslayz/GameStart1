@@ -145,14 +145,11 @@ namespace GameStart.UI
                 dragGhost = null;
             }
 
-            // If we didn't land on a valid slot's OnDrop, treat this as "dropped outside the inventory" - discard the item.
-            // NOTE: this destroys the whole stack with no world pickup and fires inconsistently
-            // depending on what sits under the cursor. Tracked as #193 Part 2.
-            if (dragSource == this && eventData.pointerEnter == null)
-            {
-                inventory?.DropSlot(isHotbarSlot, slotIndex);
-            }
-
+            // Anything that isn't a valid drop target snaps back: the item simply stays put.
+            // This used to discard the stack whenever eventData.pointerEnter was null, which
+            // destroyed items on a slightly long drag and behaved differently depending on
+            // what happened to sit under the cursor. Discarding is now an explicit action on
+            // the drop zone (see InventoryDropZoneUI).
             dragSource = null;
         }
 

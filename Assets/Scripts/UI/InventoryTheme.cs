@@ -22,6 +22,8 @@ namespace GameStart.UI
         public static readonly Color Accent = new Color(1f, 0.62f, 0.11f, 1f);
         public static readonly Color AccentSoft = new Color(1f, 0.62f, 0.11f, 0.35f);
         public static readonly Color Cyan = new Color(0.35f, 0.80f, 1f, 1f);
+        /// <summary>Used only for the discard zone, so the destructive action reads as distinct.</summary>
+        public static readonly Color Danger = new Color(0.91f, 0.35f, 0.31f, 1f);
 
         public static readonly Color SectionLabel = new Color(0.86f, 0.90f, 0.94f, 1f);
         public static readonly Color BodyText = new Color(0.66f, 0.72f, 0.79f, 1f);

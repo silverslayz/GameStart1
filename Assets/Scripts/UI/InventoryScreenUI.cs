@@ -47,6 +47,7 @@ namespace GameStart.UI
         private bool isOpen;
 
         private CharacterPreview preview;
+        private InventoryDropZoneUI dropZone;
 
         private Text detailTitle;
         private Text detailSubtitle;
@@ -491,6 +492,38 @@ namespace GameStart.UI
             {
                 slotUIs.Add(BuildSlot(gridRect, i));
             }
+
+            BuildDropZone(parent, width, BodyTop - height - 34f);
+        }
+
+        /// <summary>
+        /// Explicit discard target. Everything else snaps back, so items can only leave the
+        /// inventory through this one deliberate gesture.
+        /// </summary>
+        private void BuildDropZone(RectTransform parent, float width, float y)
+        {
+            var zone = new GameObject("DropZone", typeof(RectTransform), typeof(Image));
+            zone.transform.SetParent(parent, false);
+            var zoneRect = zone.GetComponent<RectTransform>();
+            InventoryTheme.Anchor(zoneRect, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(0f, 1f),
+                new Vector2(0f, y), new Vector2(width, 52f));
+
+            var bg = zone.GetComponent<Image>();
+            bg.color = InventoryTheme.SlotEmpty;
+
+            var frame = InventoryTheme.CreateFrame("Border", zone.transform, InventoryTheme.SlotBorderEmpty);
+
+            var label = InventoryTheme.CreateText("Label", zone.transform,
+                InventoryTheme.Spaced("DROP HERE"), 15, InventoryTheme.BodyText, TextAnchor.MiddleCenter);
+            InventoryTheme.Fill(label.rectTransform);
+
+            var hint = InventoryTheme.CreateText("Hint", parent, "Drag an item here to drop it  ·  hold SHIFT for the whole stack", 13,
+                InventoryTheme.HintText, TextAnchor.UpperLeft);
+            InventoryTheme.Anchor(hint.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(0f, 1f),
+                new Vector2(0f, y - 56f), new Vector2(width + 60f, 20f));
+
+            dropZone = zone.AddComponent<InventoryDropZoneUI>();
+            dropZone.Configure(inventory, inventory != null ? inventory.transform : null, bg, frame, label);
         }
 
         private InventorySlotUI BuildSlot(Transform parent, int index)
@@ -704,7 +737,7 @@ namespace GameStart.UI
                 Vector2.zero, new Vector2(0f, 1f));
 
             var hints = InventoryTheme.CreateText("Hints", footer,
-                "LEFT CLICK  Select        DRAG  Move or equip        DRAG TO GEAR  Equip        I / ESC  Close        ARROWS  Navigate", 17,
+                "LEFT CLICK  Select        DRAG  Move or equip        DRAG TO DROP ZONE  Discard        I / ESC  Close        ARROWS  Navigate", 17,
                 InventoryTheme.HintText, TextAnchor.MiddleLeft);
             InventoryTheme.Anchor(hints.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), new Vector2(0.5f, 0.5f),
                 new Vector2(0f, -4f), Vector2.zero);
