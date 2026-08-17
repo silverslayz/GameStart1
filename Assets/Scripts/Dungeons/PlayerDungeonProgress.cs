@@ -20,6 +20,12 @@ namespace GameStart.Dungeons
             ClearedCount = 0;
         }
 
+        /// <summary>Sets cleared count directly - for restoring saved progress.</summary>
+        public void LoadClearedCount(int count)
+        {
+            ClearedCount = Mathf.Clamp(count, 0, DungeonRegistry.TotalDungeons);
+        }
+
         public bool TryEnterCurrentDungeon(PlayerSkills skills)
         {
             if (HasClearedAll || skills == null)

@@ -183,6 +183,35 @@ namespace GameStart.Class
             InventoryChanged?.Invoke();
         }
 
+        /// <summary>Restores a single slot's contents from saved data. Call FinishLoading() once all slots are set.</summary>
+        public void LoadSlot(bool hotbar, int index, string itemName, float itemWeight, int count)
+        {
+            InventorySlot slot = GetSlot(hotbar, index);
+            if (slot == null)
+            {
+                return;
+            }
+
+            slot.Item = string.IsNullOrEmpty(itemName) ? default : new GearItem(itemName, itemWeight);
+            slot.Count = count;
+        }
+
+        /// <summary>Recomputes carried weight and notifies listeners after a batch of LoadSlot calls.</summary>
+        public void FinishLoading()
+        {
+            weight?.ResetWeight();
+            foreach (InventorySlot slot in AllSlots())
+            {
+                if (!slot.IsEmpty)
+                {
+                    weight?.AddWeight(slot.Item.Weight * slot.Count);
+                }
+            }
+
+            ItemsChanged?.Invoke(Items);
+            InventoryChanged?.Invoke();
+        }
+
         private void GrantStarterKit(PlayerClassType classType)
         {
             foreach (GearItem item in StarterGearCatalog.GetStarterKit(classType))
