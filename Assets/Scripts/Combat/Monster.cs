@@ -8,8 +8,9 @@ using GameStart.Audio;
 
 namespace GameStart.Combat
 {
-    public class Monster : MonoBehaviour, IDamageable
+    public class Monster : MonoBehaviour, IDamageable, IBestiaryTarget
     {
+        [SerializeField] private string monsterId = "Grunt";
         [SerializeField] private float maxHealth = 30f;
         [SerializeField] private int minGemDrop = 1;
         [SerializeField] private int maxGemDrop = 3;
@@ -22,12 +23,14 @@ namespace GameStart.Combat
         [SerializeField] private PlayerCurrency playerCurrency;
         [SerializeField] private PlayerResources playerResources;
         [SerializeField] private QuestLog questLog;
+        [SerializeField] private PlayerBestiary bestiary;
 
         public event Action<float, float> HealthChanged;
         public event Action Defeated;
 
         public float CurrentHealth { get; private set; }
         public bool IsDefeated { get; private set; }
+        public string BestiaryId => monsterId;
 
         private void Awake()
         {
@@ -56,6 +59,7 @@ namespace GameStart.Combat
             IsDefeated = true;
             Defeated?.Invoke();
             SfxPlayer.Play(SfxLibrary.MonsterDefeat);
+            bestiary?.RecordKill(monsterId);
 
             int gemAmount = UnityEngine.Random.Range(minGemDrop, maxGemDrop + 1);
             playerCurrency?.AddGems(gemAmount);

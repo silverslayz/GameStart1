@@ -9,13 +9,16 @@ using GameStart.Narrative;
 
 namespace GameStart.Dungeons
 {
-    public class ApexBoss : MonoBehaviour, IDamageable
+    public class ApexBoss : MonoBehaviour, IDamageable, IBestiaryTarget
     {
         [SerializeField] private string bossName = "Apex Boss";
         [SerializeField] private float maxHealth = 100f;
         [SerializeField] private PlayerDungeonProgress dungeonProgress;
         [SerializeField] private PlayerSkills playerSkills;
         [SerializeField] private VictorySequenceUI victorySequence;
+        [SerializeField] private PlayerBestiary bestiary;
+
+        public string BestiaryId => bossName;
 
         [Header("Retaliation")]
         [SerializeField] private PlayerHealth targetPlayer;
@@ -112,6 +115,7 @@ namespace GameStart.Dungeons
             IsDefeated = true;
             BossDefeated?.Invoke();
             SfxPlayer.Play(SfxLibrary.MonsterDefeat);
+            bestiary?.RecordKill(bossName);
 
             // Capture the biome before clearing - ClearCurrentDungeon() advances
             // the index, which would otherwise point at the *next* dungeon's biome.
