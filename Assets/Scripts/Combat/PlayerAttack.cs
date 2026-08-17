@@ -13,6 +13,7 @@ namespace GameStart.Combat
         [SerializeField] private float damagePerCombatLevel = 1f;
         [SerializeField] private float swingCooldown = 0.5f;
         [SerializeField] private float combatXpPerSwing = 4f;
+        [SerializeField] private PlayerBestiary bestiary;
 
         private PlayerSkills skills;
         private float lastSwingTime = float.NegativeInfinity;
@@ -46,6 +47,13 @@ namespace GameStart.Combat
                 if (damageable != null)
                 {
                     float damage = baseDamage + damagePerCombatLevel * skills.GetLevel(SkillType.Combat);
+
+                    var bestiaryTarget = hit.GetComponent<IBestiaryTarget>();
+                    if (bestiaryTarget != null && bestiary != null)
+                    {
+                        damage *= bestiary.GetDamageMultiplier(bestiaryTarget.BestiaryId);
+                    }
+
                     damageable.TakeDamage(damage);
                     break;
                 }
