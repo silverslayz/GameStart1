@@ -5,6 +5,7 @@ using GameStart.Player;
 using GameStart.Skills;
 using GameStart.UI;
 using GameStart.Audio;
+using GameStart.Narrative;
 
 namespace GameStart.Dungeons
 {
@@ -112,6 +113,10 @@ namespace GameStart.Dungeons
             BossDefeated?.Invoke();
             SfxPlayer.Play(SfxLibrary.MonsterDefeat);
 
+            // Capture the biome before clearing - ClearCurrentDungeon() advances
+            // the index, which would otherwise point at the *next* dungeon's biome.
+            string biome = dungeonProgress != null ? dungeonProgress.CurrentDungeon.Biome : null;
+
             if (dungeonProgress != null)
             {
                 dungeonProgress.ClearCurrentDungeon();
@@ -119,7 +124,14 @@ namespace GameStart.Dungeons
 
             if (victorySequence != null)
             {
-                victorySequence.Show($"Apex Boss Defeated!\n{bossName}");
+                string message = $"Apex Boss Defeated!\n{bossName}";
+                if (!string.IsNullOrEmpty(biome))
+                {
+                    LoreEntry bossLore = LoreLibrary.GetBossLore(biome);
+                    message += $"\n\n{bossLore.Body}";
+                }
+
+                victorySequence.Show(message);
             }
         }
     }
