@@ -39,7 +39,30 @@ namespace GameStart.Interaction
             }
         }
 
-        /// <summary>Drops a stack at a position, nudged slightly so it doesn't sit inside the player.</summary>
+        /// <summary>Loaded from Resources because Spawn is static - there is no scene object to hold a reference.</summary>
+        private const string PrefabResourcePath = "Prefabs/DroppedItem";
+
+        private static GameObject prefabCache;
+
+        private static GameObject LoadPrefab()
+        {
+            if (prefabCache == null)
+            {
+                prefabCache = Resources.Load<GameObject>(PrefabResourcePath);
+                if (prefabCache == null)
+                {
+                    Debug.LogError($"DroppedItem prefab missing at Resources/{PrefabResourcePath} - items cannot be dropped.");
+                }
+            }
+
+            return prefabCache;
+        }
+
+        /// <summary>
+        /// Drops a stack at a position. Returns null if nothing could be spawned, which callers
+        /// must treat as a failure and hand the items back - they have usually already been
+        /// removed from the inventory by the time this runs.
+        /// </summary>
         public static DroppedItem Spawn(GearItem item, int count, Vector3 position)
         {
             if (count <= 0)
@@ -47,19 +70,23 @@ namespace GameStart.Interaction
                 return null;
             }
 
-            var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            go.name = $"Dropped_{item.Name}";
-            go.transform.position = position;
-            go.transform.localScale = Vector3.one * 0.35f;
-            go.transform.rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-
-            var renderer = go.GetComponent<Renderer>();
-            if (renderer != null)
+            GameObject prefab = LoadPrefab();
+            if (prefab == null)
             {
-                renderer.material.color = new Color(0.85f, 0.66f, 0.25f);
+                return null;
             }
 
-            var dropped = go.AddComponent<DroppedItem>();
+            var go = Instantiate(prefab, position, Quaternion.Euler(0f, Random.Range(0f, 360f), 0f));
+            go.name = $"Dropped_{item.Name}";
+
+            var dropped = go.GetComponent<DroppedItem>();
+            if (dropped == null)
+            {
+                Debug.LogError("DroppedItem prefab has no DroppedItem component.");
+                Destroy(go);
+                return null;
+            }
+
             dropped.item = item;
             dropped.count = count;
             return dropped;

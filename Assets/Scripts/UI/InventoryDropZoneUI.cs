@@ -95,9 +95,14 @@ namespace GameStart.UI
                 moved++;
             }
 
-            if (moved > 0)
+            if (moved > 0 && DroppedItem.Spawn(item, moved, DropPosition()) == null)
             {
-                DroppedItem.Spawn(item, moved, DropPosition());
+                // The items are already out of the bag at this point, so a failed spawn would
+                // destroy them. Put them back instead.
+                for (int i = 0; i < moved; i++)
+                {
+                    inventory.AddItem(item);
+                }
             }
 
             InventorySlotUI.ConsumeDrag();
