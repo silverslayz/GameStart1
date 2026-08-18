@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using GameStart.UI;
 
 namespace GameStart.Interaction
 {
@@ -19,7 +20,23 @@ namespace GameStart.Interaction
             {
                 CurrentInteractable = found;
                 NearbyInteractableChanged?.Invoke(CurrentInteractable);
+
+                // Driven from the change itself rather than polled, so the label swaps the
+                // moment the target does and disappears the moment there isn't one.
+                InteractPromptText.SetTarget(CurrentInteractable);
             }
+            else if (CurrentInteractable != null)
+            {
+                InteractPromptText.Refresh(CurrentInteractable);
+            }
+        }
+
+        private void OnDisable()
+        {
+            // Death, a full-screen menu, a scene swap: whatever disabled us, the prompt
+            // shouldn't be left hanging over a target the player can no longer reach.
+            CurrentInteractable = null;
+            InteractPromptText.Clear();
         }
 
         private IInteractable FindNearbyInteractable()
