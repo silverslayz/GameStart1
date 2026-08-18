@@ -412,6 +412,13 @@ namespace GameStart.UI
             BuildCharacterPanel(content, gridWidth + ColumnGap);
             BuildDetailPanel(content, gridWidth + ColumnGap + CharacterPanelWidth + ColumnGap);
             BuildFooter(content);
+
+            // Parented to the canvas root rather than the content rect, and built last, so
+            // it floats over every panel instead of being clipped by the one it started in.
+            // Lives on the root object, so closing the screen deactivates it and its
+            // OnDisable clears any tooltip left showing under the cursor.
+            var tooltip = root.AddComponent<InventoryTooltipUI>();
+            tooltip.Build(root.GetComponent<RectTransform>());
         }
 
         private void BuildHeader(RectTransform parent)

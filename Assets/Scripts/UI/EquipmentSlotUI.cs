@@ -10,7 +10,7 @@ namespace GameStart.UI
     /// One equipment slot in the character panel. Accepts an item dragged from the inventory
     /// grid, and shows what is currently worn in that slot.
     /// </summary>
-    public class EquipmentSlotUI : MonoBehaviour, IDropHandler, IPointerClickHandler
+    public class EquipmentSlotUI : MonoBehaviour, IDropHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         public static event Action<EquipmentSlotUI> SlotClicked;
 
@@ -66,6 +66,26 @@ namespace GameStart.UI
         public void OnPointerClick(PointerEventData eventData)
         {
             SlotClicked?.Invoke(this);
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            // Mid-drag the interesting item is the one on the cursor, not what's worn here.
+            if (InventorySlotUI.CurrentDragSource != null
+                || equipment == null
+                || !equipment.IsEquipped(slotType))
+            {
+                InventoryTooltipUI.Hide();
+                return;
+            }
+
+            InventoryTooltipUI.Show(equipment.GetEquipped(slotType), 1,
+                "EQUIPPED  //  " + PlayerEquipment.DisplayName(slotType).ToUpperInvariant());
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            InventoryTooltipUI.Hide();
         }
 
         public void OnDrop(PointerEventData eventData)
