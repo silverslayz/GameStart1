@@ -176,10 +176,119 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2450730577681630185, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2929970263122096886}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3275724280225281717, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1737334983153690304}
+    - targetCorrespondingSourceObject: {fileID: 3275724280225281717, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6672573695773629863}
+    - targetCorrespondingSourceObject: {fileID: 3275724280225281717, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1212097113843270939}
+    - targetCorrespondingSourceObject: {fileID: 3275724280225281717, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4475509670621354196}
+    - targetCorrespondingSourceObject: {fileID: 3275724280225281717, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4493004255213675274}
   m_SourcePrefab: {fileID: 100100000, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
 --- !u!4 &2337393999883774973 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2450730577681630185, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
   m_PrefabInstance: {fileID: 176389207207798804}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3388709045583371937 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3275724280225281717, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
+  m_PrefabInstance: {fileID: 176389207207798804}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &1737334983153690304
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388709045583371937}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.4516632
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 1.8
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.35
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &6672573695773629863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388709045583371937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53c82fa7f462a6a468768c5ab729a4c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameStart.Combat.MonsterSenses
+  detectionRadius: 12
+  alwaysNoticeRadius: 3.5
+  useVisionCone: 1
+  visionConeAngle: 140
+  loseAggroPadding: 5
+--- !u!114 &1212097113843270939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388709045583371937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c7b0aa783a588a4e8bccbbe4ff86343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameStart.Combat.MonsterPursuit
+  moveSpeed: 3.2
+  angularSpeed: 260
+  acceleration: 12
+  stoppingDistance: 1.8
+  maxLeashDistance: 22
+  giveUpDelay: 3
+--- !u!114 &4475509670621354196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388709045583371937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab13dfd0ec7bd6245bff649a5baad303, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameStart.Combat.MonsterAttack
+  style: 0
+  attackDamage: 6
+  attackRange: 2.2
+  windup: 0.55
+  cooldown: 2
+  rangedMaxRange: 12
+--- !u!114 &4493004255213675274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388709045583371937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3986b5edde6170b4497a3355a8dc47b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameStart.Combat.CharacterTint
+  tint: {r: 0.72, g: 0.16, b: 0.14, a: 1}
+  excluded: []

@@ -176,10 +176,32 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1519246771549568865, guid: b826eb491f532d341b589134e037c500, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8453278237076504079}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2481480931053157977, guid: b826eb491f532d341b589134e037c500, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9145011164747281599}
   m_SourcePrefab: {fileID: 100100000, guid: b826eb491f532d341b589134e037c500, type: 3}
 --- !u!4 &5642415676441793305 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1519246771549568865, guid: b826eb491f532d341b589134e037c500, type: 3}
   m_PrefabInstance: {fileID: 6582171152258854008}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8734568785557738017 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2481480931053157977, guid: b826eb491f532d341b589134e037c500, type: 3}
+  m_PrefabInstance: {fileID: 6582171152258854008}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9145011164747281599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8734568785557738017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3986b5edde6170b4497a3355a8dc47b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameStart.Combat.CharacterTint
+  tint: {r: 0.72, g: 0.16, b: 0.14, a: 1}
+  excluded: []
