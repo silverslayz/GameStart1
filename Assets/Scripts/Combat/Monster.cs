@@ -6,6 +6,7 @@ using GameStart.Gathering;
 using GameStart.UI;
 using GameStart.Audio;
 using GameStart.Flow;
+using GameStart.Dungeons;
 
 namespace GameStart.Combat
 {
@@ -44,8 +45,13 @@ namespace GameStart.Combat
         }
         public string BestiaryId => monsterId;
 
+        // Authored value, remembered so repeated scaling multiplies the prefab's number
+        // rather than compounding on the last result.
+        private float baseMaxHealth;
+
         private void Awake()
         {
+            baseMaxHealth = maxHealth;
             CurrentHealth = maxHealth;
 
             // Every one of these lives on the player, which a prefab can't reference. A
@@ -54,6 +60,22 @@ namespace GameStart.Combat
             playerResources = SceneLink.Resolve(playerResources);
             questLog = SceneLink.Resolve(questLog);
             bestiary = SceneLink.Resolve(bestiary);
+        }
+
+        /// <summary>
+        /// Scales this monster for the dungeon it belongs to. Multiplies the authored max
+        /// health rather than replacing it, so archetype differences survive.
+        /// </summary>
+        public void ScaleForEncounter(int dungeonIndex, int playerCombatLevel)
+        {
+            if (baseMaxHealth <= 0f)
+            {
+                baseMaxHealth = maxHealth;
+            }
+
+            maxHealth = baseMaxHealth * DifficultyScaling.GetMonsterHealthMultiplier(dungeonIndex, playerCombatLevel);
+            CurrentHealth = maxHealth;
+            HealthChanged?.Invoke(CurrentHealth, maxHealth);
         }
 
         public void TakeDamage(float amount)
