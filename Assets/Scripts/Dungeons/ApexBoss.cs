@@ -124,6 +124,7 @@ namespace GameStart.Dungeons
             CurrentHealth = Mathf.Max(0f, CurrentHealth - amount);
             HealthChanged?.Invoke(CurrentHealth, maxHealth);
             SfxPlayer.Play(SfxLibrary.DamageHit);
+            FloatingCombatText.ShowDamage(transform, amount);
 
             if (CurrentHealth <= 0f)
             {
