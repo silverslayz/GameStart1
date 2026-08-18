@@ -3,7 +3,7 @@ using GameStart.Interaction;
 
 namespace GameStart.Crafting
 {
-    public class CookingStation : MonoBehaviour, IInteractable
+    public class CookingStation : MonoBehaviour, IInteractable, IConditionalInteractable
     {
         [SerializeField] private string recipeName = "Cooked Meat";
 
@@ -21,6 +21,8 @@ namespace GameStart.Crafting
                 return $"Cook {recipe.Value.RecipeName} ({ingredient.Amount} {ingredient.ResourceName})";
             }
         }
+
+        public bool CanInteract => CookingRecipeCatalog.FindByName(recipeName) != null;
 
         public void Interact(GameObject interactor)
         {
