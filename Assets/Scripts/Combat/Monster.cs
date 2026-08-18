@@ -19,6 +19,10 @@ namespace GameStart.Combat
         [SerializeField] private int minFoodDrop = 1;
         [SerializeField] private int maxFoodDrop = 2;
         [SerializeField] private float respawnTime = 20f;
+
+        [Tooltip("Off when a spawner owns this monster's lifecycle: it stays defeated and the "
+                 + "spawner decides when and where a replacement appears.")]
+        [SerializeField] private bool selfRespawn = true;
         [SerializeField] private string questGemObjective = "Collect F-rank gems from monsters near the starting town";
 
         [SerializeField] private PlayerCurrency playerCurrency;
@@ -31,6 +35,13 @@ namespace GameStart.Combat
 
         public float CurrentHealth { get; private set; }
         public bool IsDefeated { get; private set; }
+
+        /// <summary>Spawners clear this so they, not the monster, control repopulation.</summary>
+        public bool SelfRespawn
+        {
+            get => selfRespawn;
+            set => selfRespawn = value;
+        }
         public string BestiaryId => monsterId;
 
         private void Awake()
@@ -85,7 +96,13 @@ namespace GameStart.Combat
             playerResources?.AddResource(rawFoodResourceName, foodAmount);
 
             SetPresenceActive(false);
-            StartCoroutine(RespawnAfterDelay());
+
+            // A spawner-owned monster stays down; the spawner replaces it. Respawning
+            // here as well would leave two monsters where the budget allowed one.
+            if (selfRespawn)
+            {
+                StartCoroutine(RespawnAfterDelay());
+            }
         }
 
         private IEnumerator RespawnAfterDelay()
