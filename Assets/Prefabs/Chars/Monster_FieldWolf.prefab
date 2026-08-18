@@ -189,6 +189,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3275724280225281717, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4475509670621354196}
+    - targetCorrespondingSourceObject: {fileID: 3275724280225281717, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4493004255213675274}
   m_SourcePrefab: {fileID: 100100000, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
 --- !u!4 &2337393999883774973 stripped
 Transform:
@@ -275,3 +278,17 @@ MonoBehaviour:
   windup: 0.55
   cooldown: 2
   rangedMaxRange: 12
+--- !u!114 &4493004255213675274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388709045583371937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3986b5edde6170b4497a3355a8dc47b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameStart.Combat.CharacterTint
+  tint: {r: 0.72, g: 0.16, b: 0.14, a: 1}
+  excluded: []
