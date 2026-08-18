@@ -6,7 +6,8 @@ using GameStart.Class;
 
 namespace GameStart.UI
 {
-    public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
+    public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler,
+        IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Text nameText;
         [SerializeField] private Text countText;
@@ -106,6 +107,29 @@ namespace GameStart.UI
             SlotClicked?.Invoke(this);
         }
 
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            // Nothing to describe mid-drag, and the tooltip would chase the ghost.
+            if (dragSource != null)
+            {
+                return;
+            }
+
+            InventorySlot slot = inventory != null ? inventory.GetSlot(isHotbarSlot, slotIndex) : null;
+            if (slot == null || slot.IsEmpty)
+            {
+                InventoryTooltipUI.Hide();
+                return;
+            }
+
+            InventoryTooltipUI.Show(slot.Item, slot.Count, isHotbarSlot ? "HOTBAR" : "MAIN INVENTORY");
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            InventoryTooltipUI.Hide();
+        }
+
         public void OnBeginDrag(PointerEventData eventData)
         {
             InventorySlot slot = inventory != null ? inventory.GetSlot(isHotbarSlot, slotIndex) : null;
@@ -115,6 +139,7 @@ namespace GameStart.UI
             }
 
             dragSource = this;
+            InventoryTooltipUI.Hide();
 
             dragGhost = new GameObject("DragGhost", typeof(RectTransform), typeof(Image), typeof(CanvasGroup));
             var rootCanvas = GetComponentInParent<Canvas>().rootCanvas;
