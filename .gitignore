@@ -109,3 +109,9 @@ InitTestScene*.unity*
 # Python bytecode from the Blender asset generators
 __pycache__/
 *.pyc
+
+# Git LFS hooks misplaced by Windows tooling. `git -c core.hooksPath=/dev/null ...`
+# is a common "run without hooks" idiom, but Git for Windows resolves that value as a
+# repo-relative path, so `git lfs install` creates ./dev/null/ and writes its hooks
+# there instead of discarding them. Harmless but never ours to commit.
+/dev/
