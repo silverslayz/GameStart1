@@ -30,6 +30,16 @@ namespace GameStart.Combat
         [Tooltip("Seconds without aggro before it walks home.")]
         [SerializeField] private float giveUpDelay = 3f;
 
+        [Header("Archetype behaviour")]
+        [Tooltip("Where this monster settles relative to its target. Ranged types sit well back.")]
+        [SerializeField] private float desiredRange = 1.8f;
+
+        [Tooltip("Closer than this and it backs away to desiredRange. 0 disables kiting.")]
+        [SerializeField] private float retreatRange = 0f;
+
+        [Tooltip("0 charges straight at the target, 1 circles hard around it.")]
+        [SerializeField, Range(0f, 1f)] private float flankStrength = 0f;
+
         public bool IsReturningHome { get; private set; }
         public float MoveSpeed
         {
@@ -49,6 +59,10 @@ namespace GameStart.Combat
         private float lostTargetAt = float.NegativeInfinity;
         private bool warnedOffMesh;
 
+        // Chosen once per monster so a pack circles both ways instead of forming a
+        // single conga line around the player.
+        private float flankSign = 1f;
+
         private void Awake()
         {
             monster = GetComponent<Monster>();
@@ -67,6 +81,8 @@ namespace GameStart.Combat
             agent.stoppingDistance = stoppingDistance;
             // The mesh is authored around the origin at the monster's feet.
             agent.baseOffset = 0f;
+
+            flankSign = Random.value < 0.5f ? -1f : 1f;
         }
 
         private void OnEnable()
@@ -123,7 +139,7 @@ namespace GameStart.Combat
                 IsReturningHome = false;
                 agent.isStopped = false;
                 agent.stoppingDistance = stoppingDistance;
-                agent.SetDestination(senses.Target.transform.position);
+                agent.SetDestination(ComputeChaseDestination(senses.Target.transform.position));
                 return;
             }
 
@@ -132,6 +148,55 @@ namespace GameStart.Combat
             if (leashed || waitedLongEnough)
             {
                 ReturnHome();
+            }
+        }
+
+        /// <summary>
+        /// Where the monster actually wants to stand, rather than simply the target's feet.
+        /// This is what makes archetypes read differently: a ranged type retreats to keep
+        /// its distance, a fast type arcs around instead of charging down the same line.
+        /// </summary>
+        private Vector3 ComputeChaseDestination(Vector3 targetPosition)
+        {
+            Vector3 fromTarget = transform.position - targetPosition;
+            float distance = fromTarget.magnitude;
+            if (distance < 0.01f)
+            {
+                return targetPosition;
+            }
+
+            Vector3 outward = fromTarget / distance;
+
+            // Kiting: back off to the preferred range rather than standing and trading.
+            if (retreatRange > 0f && distance < retreatRange)
+            {
+                return targetPosition + outward * Mathf.Max(desiredRange, retreatRange);
+            }
+
+            if (flankStrength > 0f)
+            {
+                Vector3 sideways = Vector3.Cross(Vector3.up, outward) * flankSign;
+                Vector3 approach = (outward + sideways * flankStrength).normalized;
+                return targetPosition + approach * Mathf.Max(desiredRange, 0.5f);
+            }
+
+            return targetPosition;
+        }
+
+        /// <summary>Applies an archetype's movement parameters.</summary>
+        public void ApplyProfile(MonsterArchetypeProfile profile)
+        {
+            MoveSpeed = profile.MoveSpeed;
+            desiredRange = profile.DesiredRange;
+            retreatRange = profile.RetreatRange;
+            flankStrength = profile.FlankStrength;
+            maxLeashDistance = profile.MaxLeashDistance;
+            giveUpDelay = profile.GiveUpDelay;
+
+            stoppingDistance = Mathf.Max(0.5f, profile.DesiredRange - 0.2f);
+            if (agent != null)
+            {
+                agent.stoppingDistance = stoppingDistance;
             }
         }
 

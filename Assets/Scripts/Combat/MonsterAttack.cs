@@ -120,6 +120,23 @@ namespace GameStart.Combat
             DamageDealt?.Invoke(attackDamage);
         }
 
+        /// <summary>
+        /// Sets attack style, reach and timing without touching damage.
+        ///
+        /// Separate from Configure precisely so archetype behaviour (#179) cannot overwrite
+        /// the damage baseline that difficulty scaling multiplies (#204) or the magnitudes
+        /// that archetype stats will own (#108). How a monster swings is behaviour; how hard
+        /// it hits is not.
+        /// </summary>
+        public void ConfigureBehaviour(MonsterAttackStyle attackStyle, float range, float windupSeconds, float cooldownSeconds)
+        {
+            style = attackStyle;
+            if (attackStyle == MonsterAttackStyle.Ranged) rangedMaxRange = range;
+            else attackRange = range;
+            windup = windupSeconds;
+            cooldown = cooldownSeconds;
+        }
+
         /// <summary>Lets archetype data drive the numbers without exposing the fields.</summary>
         public void Configure(MonsterAttackStyle attackStyle, float damage, float range, float windupSeconds, float cooldownSeconds)
         {

@@ -192,6 +192,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3275724280225281717, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4493004255213675274}
+    - targetCorrespondingSourceObject: {fileID: 3275724280225281717, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8605862334745347038}
   m_SourcePrefab: {fileID: 100100000, guid: 80b8e8b53e1d0c44c8f7955aa629d5bc, type: 3}
 --- !u!4 &2337393999883774973 stripped
 Transform:
@@ -260,6 +263,9 @@ MonoBehaviour:
   stoppingDistance: 1.8
   maxLeashDistance: 22
   giveUpDelay: 3
+  desiredRange: 1.8
+  retreatRange: 0
+  flankStrength: 0
 --- !u!114 &4475509670621354196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,3 +298,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameStart.Combat.CharacterTint
   tint: {r: 0.72, g: 0.16, b: 0.14, a: 1}
   excluded: []
+--- !u!114 &8605862334745347038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388709045583371937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d00a93bbd41504a80e5f58ab30f165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameStart.Combat.MonsterArchetypeBinding
+  archetype: 0
