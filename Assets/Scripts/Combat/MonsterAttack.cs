@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using GameStart.Audio;
+using GameStart.Dungeons;
 
 namespace GameStart.Combat
 {
@@ -55,10 +56,26 @@ namespace GameStart.Combat
         private MonsterSenses senses;
         private float lastAttackTime = float.NegativeInfinity;
 
+        // Authored value, so scaling multiplies the prefab's number rather than the
+        // last scaled result.
+        private float baseAttackDamage;
+
         private void Awake()
         {
             monster = GetComponent<Monster>();
             senses = GetComponent<MonsterSenses>();
+            baseAttackDamage = attackDamage;
+        }
+
+        /// <summary>Scales damage for the dungeon this monster belongs to.</summary>
+        public void ScaleForEncounter(int dungeonIndex, int playerCombatLevel)
+        {
+            if (baseAttackDamage <= 0f)
+            {
+                baseAttackDamage = attackDamage;
+            }
+
+            attackDamage = baseAttackDamage * DifficultyScaling.GetMonsterDamageMultiplier(dungeonIndex, playerCombatLevel);
         }
 
         private void Update()
@@ -108,6 +125,10 @@ namespace GameStart.Combat
         {
             style = attackStyle;
             attackDamage = damage;
+            // Configure sets a new authored baseline, so scaling must multiply this rather
+            // than the value captured at Awake - otherwise archetype data (#179) applied
+            // after startup would be silently ignored by ScaleForEncounter.
+            baseAttackDamage = damage;
             if (attackStyle == MonsterAttackStyle.Ranged) rangedMaxRange = range;
             else attackRange = range;
             windup = windupSeconds;

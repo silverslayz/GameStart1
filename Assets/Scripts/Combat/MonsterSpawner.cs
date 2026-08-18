@@ -106,6 +106,18 @@ namespace GameStart.Combat
                 return;
             }
 
+            // Scale to the tier this spawner belongs to. The spawner is the only thing that
+            // knows which dungeon a monster came from, which is why scaling lives here
+            // rather than on the prefab.
+            int combatLevel = GetPlayerCombatLevel();
+            monster.ScaleForEncounter(dungeonIndex, combatLevel);
+
+            var attack = go.GetComponent<MonsterAttack>();
+            if (attack != null)
+            {
+                attack.ScaleForEncounter(dungeonIndex, combatLevel);
+            }
+
             // This spawner owns repopulation from here.
             monster.SelfRespawn = false;
             monster.Defeated += OnAnyDefeated;
@@ -174,6 +186,12 @@ namespace GameStart.Combat
             }
 
             FillToCapacity();
+        }
+
+        private int GetPlayerCombatLevel()
+        {
+            var skills = FindAnyObjectByType<GameStart.Skills.PlayerSkills>();
+            return skills != null ? skills.GetLevel(GameStart.Skills.SkillType.Combat) : 1;
         }
 
         private bool IsPlayerNear()
