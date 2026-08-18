@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GameStart.Combat;
 
 namespace GameStart.UI
 {
@@ -13,32 +14,50 @@ namespace GameStart.UI
     {
         public static readonly Color DamageColor = new Color(1f, 0.96f, 0.88f, 1f);
 
+        /// <summary>
+        /// The same gold BestiaryUI uses for "Weakness discovered", so the number and the
+        /// bestiary entry that explains it read as the same idea.
+        /// </summary>
+        public static readonly Color WeaknessDamageColor = new Color(1f, 0.85f, 0.3f, 1f);
+
+        /// <summary>
+        /// Weakness hits are only 25% bigger in value, which is easy to miss between two
+        /// numbers a moment apart - so they're drawn larger as well as recolored, and stay
+        /// distinguishable for players who can't rely on the color difference.
+        /// </summary>
+        private const float WeaknessSizeScale = 1.3f;
+
         private static FloatingCombatTextRunner runner;
 
         /// <summary>Spawns a damage number above the target's visible bounds.</summary>
-        public static void ShowDamage(Transform target, float amount)
+        public static void ShowDamage(Transform target, float amount, DamageFlavor flavor = DamageFlavor.Normal)
         {
             if (target == null)
             {
                 return;
             }
 
-            ShowDamage(AnchorAbove(target), amount);
+            ShowDamage(AnchorAbove(target), amount, flavor);
         }
 
         /// <summary>Spawns a damage number rising from a world position.</summary>
-        public static void ShowDamage(Vector3 worldPosition, float amount)
+        public static void ShowDamage(Vector3 worldPosition, float amount, DamageFlavor flavor = DamageFlavor.Normal)
         {
             // Damage is tracked as a float but reads as a whole number, and any landed hit
             // should show at least 1 rather than a "0" that looks like the swing whiffed.
             int rounded = Mathf.Max(1, Mathf.RoundToInt(amount));
-            Show(worldPosition, rounded.ToString(), DamageColor);
+            bool weakness = flavor == DamageFlavor.Weakness;
+
+            Show(worldPosition,
+                rounded.ToString(),
+                weakness ? WeaknessDamageColor : DamageColor,
+                weakness ? WeaknessSizeScale : 1f);
         }
 
-        public static void Show(Vector3 worldPosition, string content, Color color)
+        public static void Show(Vector3 worldPosition, string content, Color color, float sizeScale = 1f)
         {
             EnsureRunner();
-            runner.Spawn(worldPosition, content, color);
+            runner.Spawn(worldPosition, content, color, sizeScale);
         }
 
         /// <summary>
@@ -122,10 +141,10 @@ namespace GameStart.UI
             canvasRect = canvasGo.GetComponent<RectTransform>();
         }
 
-        public void Spawn(Vector3 worldPosition, string content, Color color)
+        public void Spawn(Vector3 worldPosition, string content, Color color, float sizeScale)
         {
             FloatingLabel label = Rent();
-            label.Activate(worldPosition, content, color, Random.Range(-HorizontalScatter, HorizontalScatter));
+            label.Activate(worldPosition, content, color, Random.Range(-HorizontalScatter, HorizontalScatter), sizeScale);
 
             // Place it this frame so it never flashes at the canvas centre before LateUpdate.
             Step(label, Camera.main, 0f);
@@ -191,7 +210,7 @@ namespace GameStart.UI
             float pop = progress < PopInPortion
                 ? Mathf.Lerp(PopScale, 1f, progress / PopInPortion)
                 : 1f;
-            label.Rect.localScale = Vector3.one * pop;
+            label.Rect.localScale = Vector3.one * (pop * label.SizeScale);
 
             float alpha = progress < FadeStart
                 ? 1f
@@ -245,19 +264,21 @@ namespace GameStart.UI
         public bool InUse { get; private set; }
         public Vector3 Origin { get; private set; }
         public float Scatter { get; private set; }
+        public float SizeScale { get; private set; }
         public float Elapsed { get; set; }
 
-        public void Activate(Vector3 origin, string content, Color color, float scatter)
+        public void Activate(Vector3 origin, string content, Color color, float scatter, float sizeScale)
         {
             Origin = origin;
             Scatter = scatter;
+            SizeScale = sizeScale;
             Elapsed = 0f;
             InUse = true;
             baseColor = color;
 
             text.text = content;
             text.color = color;
-            Rect.localScale = Vector3.one;
+            Rect.localScale = Vector3.one * sizeScale;
             SetVisible(true);
         }
 

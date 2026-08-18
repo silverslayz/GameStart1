@@ -114,7 +114,7 @@ namespace GameStart.Dungeons
             }
         }
 
-        public void TakeDamage(float amount)
+        public void TakeDamage(float amount, DamageFlavor flavor = DamageFlavor.Normal)
         {
             if (IsDefeated || amount <= 0f)
             {
@@ -124,7 +124,7 @@ namespace GameStart.Dungeons
             CurrentHealth = Mathf.Max(0f, CurrentHealth - amount);
             HealthChanged?.Invoke(CurrentHealth, maxHealth);
             SfxPlayer.Play(SfxLibrary.DamageHit);
-            FloatingCombatText.ShowDamage(transform, amount);
+            FloatingCombatText.ShowDamage(transform, amount, flavor);
 
             if (CurrentHealth <= 0f)
             {
