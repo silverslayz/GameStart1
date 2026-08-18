@@ -37,7 +37,11 @@ namespace GameStart.Combat
 
         public bool IsAggroed { get; private set; }
         public PlayerHealth Target { get; private set; }
-        public float DetectionRadius => detectionRadius;
+        public float DetectionRadius
+        {
+            get => detectionRadius;
+            set => detectionRadius = value;
+        }
 
         private Monster monster;
         private PlayerHealth player;

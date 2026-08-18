@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5265551644684780476
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2337393999883774973, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2337393999883774973, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2337393999883774973, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2337393999883774973, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.699
+      objectReference: {fileID: 0}
+    - target: {fileID: 2337393999883774973, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.33531812
+      objectReference: {fileID: 0}
+    - target: {fileID: 2337393999883774973, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2337393999883774973, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2337393999883774973, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2337393999883774973, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2337393999883774973, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2337393999883774973, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2337393999883774973, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2337393999883774973, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3388709045583371937, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: m_Name
+      value: Monster_Tanky_Direwolf
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493004255213675274, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: tint.b
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493004255213675274, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: tint.g
+      value: 0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493004255213675274, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: tint.r
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605862334745347038, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
+      propertyPath: archetype
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ab29b10f71f729545ba368c92738fca9, type: 3}
