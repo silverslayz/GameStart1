@@ -5,7 +5,16 @@ namespace GameStart.Dungeons
 {
     public static class DungeonRegistry
     {
-        public const int TotalDungeons = 100;
+        /// <summary>
+        /// Deliberately small until the core loop proves itself. 100 gates over 10 biomes
+        /// was a promise the team can't keep: procedurally-named repeats read as filler,
+        /// and none of them exist as authored spaces yet.
+        ///
+        /// 20 is two per biome, so every biome is represented evenly (the biome is picked
+        /// by index % Biomes.Length, so multiples of 10 stay balanced). Raise it once a
+        /// dungeon is actually fun to play through - not before.
+        /// </summary>
+        public const int TotalDungeons = 20;
 
         private static readonly string[] Biomes =
         {
