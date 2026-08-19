@@ -10,11 +10,21 @@ namespace GameStart.UI
         [SerializeField] private int objectiveIndex;
 
         private bool hasFired;
+        private bool wasComplete;
 
         private void Awake()
         {
             // Lives on a scene canvas, so a prefab instance starts with this null.
             victorySequence = SceneLink.Resolve(victorySequence);
+        }
+
+        private void Start()
+        {
+            // Whatever the scene asset or a loaded save already says is the baseline, not
+            // something the player just did. The scene ships this objective at 10/10, which
+            // is why the sequence played the moment a run started.
+            wasComplete = IsObjectiveComplete();
+            hasFired = wasComplete;
         }
 
         private void OnEnable()
@@ -39,24 +49,46 @@ namespace GameStart.UI
 
         private void OnObjectivesReset()
         {
-            // A new run can earn this again.
+            // Progress was wiped, so a new run can earn this again.
             hasFired = false;
+            wasComplete = false;
+        }
+
+        private bool IsObjectiveComplete()
+        {
+            if (questLog == null || objectiveIndex < 0 || objectiveIndex >= questLog.Objectives.Count)
+            {
+                return false;
+            }
+
+            QuestObjective objective = questLog.Objectives[objectiveIndex];
+
+            // A target of zero counts as complete the moment it exists, which is never what
+            // a collect-N objective means.
+            return objective.TargetCount > 0 && objective.IsComplete;
         }
 
         private void OnObjectiveChanged(int index)
         {
-            if (hasFired || index != objectiveIndex)
+            if (index != objectiveIndex)
             {
                 return;
             }
 
-            QuestObjective objective = questLog.Objectives[index];
-            if (!objective.IsComplete)
+            bool isComplete = IsObjectiveComplete();
+
+            // Fire on the crossing, not on the state: something already complete before the
+            // player touched it has nothing to celebrate.
+            bool justCompleted = isComplete && !wasComplete;
+            wasComplete = isComplete;
+
+            if (hasFired || !justCompleted)
             {
                 return;
             }
 
             hasFired = true;
+            QuestObjective objective = questLog.Objectives[index];
             victorySequence.Show($"Objective Complete!\n{objective.Description}");
         }
     }
