@@ -120,7 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameStart.Player.PlayerController
   walkSpeed: 4
   jogSpeed: 5.5
-  sprintSpeed: 11
+  sprintSpeed: 14
   swimSpeed: 4.5
   crouchSpeed: 2
   jumpHeight: 1.2

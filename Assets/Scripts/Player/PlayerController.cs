@@ -10,7 +10,7 @@ namespace GameStart.Player
         [Header("Movement Speeds")]
         [SerializeField] private float walkSpeed = 4f;
         [SerializeField] private float jogSpeed = 5.5f;
-        [SerializeField] private float sprintSpeed = 11f;
+        [SerializeField] private float sprintSpeed = 14f;
         [SerializeField] private float swimSpeed = 4.5f;
         [SerializeField] private float crouchSpeed = 2f;
 
@@ -35,6 +35,10 @@ namespace GameStart.Player
         public bool IsSwimming => isSwimming;
         public bool IsGrounded => controller.isGrounded;
         public float CurrentSpeed { get; private set; }
+
+        /// <summary>Exposed so the animator bridge can map real speed onto the blend tree.</summary>
+        public float WalkSpeed => walkSpeed;
+        public float SprintSpeed => sprintSpeed;
         public bool IsAscending => verticalVelocity.y > 0.01f && !controller.isGrounded;
         public bool IsFalling => verticalVelocity.y < -0.01f && !controller.isGrounded;
 
