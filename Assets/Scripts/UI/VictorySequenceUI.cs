@@ -13,6 +13,8 @@ namespace GameStart.UI
         [SerializeField] private PlayerInput playerInput;
         [SerializeField] private Behaviour cameraLookController;
 
+        private bool isShowing;
+
         private void Awake()
         {
             if (panel != null)
@@ -51,12 +53,47 @@ namespace GameStart.UI
                 cameraLookController.enabled = false;
             }
 
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            isShowing = true;
+            ReleaseCursor();
+        }
+
+        /// <summary>
+        /// Re-asserted every frame while the panel is up rather than set once in Show().
+        /// This panel appears mid-gameplay, where anything else that grabs the cursor
+        /// after us would otherwise leave a visible panel the player cannot click - and
+        /// a modal that owns the screen should own the cursor for as long as it's up.
+        /// </summary>
+        private void LateUpdate()
+        {
+            if (isShowing)
+            {
+                ReleaseCursor();
+            }
+        }
+
+        private void ReleaseCursor()
+        {
+            if (Cursor.lockState != CursorLockMode.None)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+
+            if (!Cursor.visible)
+            {
+                Cursor.visible = true;
+            }
         }
 
         public void Continue()
         {
+            if (!isShowing)
+            {
+                // The button is wired twice - a persistent onClick in the scene plus the
+                // listener added above - so a single click calls this twice.
+                return;
+            }
+
+            isShowing = false;
             SfxPlayer.Play(SfxLibrary.UIClick);
 
             if (panel != null)
