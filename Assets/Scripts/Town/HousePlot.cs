@@ -4,7 +4,7 @@ using GameStart.Economy;
 
 namespace GameStart.Town
 {
-    public class HousePlot : MonoBehaviour, IInteractable
+    public class HousePlot : MonoBehaviour, IInteractable, IConditionalInteractable
     {
         [SerializeField] private string unclaimedPrompt = "Claim House Plot";
         [SerializeField] private float repairAmount = 25f;
@@ -31,6 +31,12 @@ namespace GameStart.Town
                 return "Your House (Well-Maintained)";
             }
         }
+
+        // Mirrors Interact's early returns, minus the parts that depend on who's
+        // interacting (whether they already own a house, whether they can afford
+        // the repair) - those aren't knowable from here.
+        public bool CanInteract => !IsClaimed
+            || (condition != null && condition.CurrentCondition < condition.MaxCondition);
 
         public void Interact(GameObject interactor)
         {
