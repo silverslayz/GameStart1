@@ -5,7 +5,7 @@ using GameStart.Skills;
 
 namespace GameStart.Gathering
 {
-    public class ResourceNode : MonoBehaviour, IInteractable
+    public class ResourceNode : MonoBehaviour, IInteractable, IConditionalInteractable
     {
         [SerializeField] private string resourceName = "Iron Ore";
         [SerializeField] private int yieldPerGather = 1;
@@ -15,6 +15,8 @@ namespace GameStart.Gathering
         public bool IsDepleted { get; private set; }
 
         public string InteractionPrompt => IsDepleted ? $"{resourceName} (depleted)" : $"Gather {resourceName}";
+
+        public bool CanInteract => !IsDepleted;
 
         public void Interact(GameObject interactor)
         {

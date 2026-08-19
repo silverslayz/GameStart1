@@ -47,14 +47,23 @@ namespace GameStart.Combat
                 if (damageable != null)
                 {
                     float damage = baseDamage + damagePerCombatLevel * skills.GetLevel(SkillType.Combat);
+                    var flavor = DamageFlavor.Normal;
 
                     var bestiaryTarget = hit.GetComponent<IBestiaryTarget>();
                     if (bestiaryTarget != null && bestiary != null)
                     {
-                        damage *= bestiary.GetDamageMultiplier(bestiaryTarget.BestiaryId);
+                        float multiplier = bestiary.GetDamageMultiplier(bestiaryTarget.BestiaryId);
+                        damage *= multiplier;
+
+                        // Anything above 1x means this swing is exploiting a weakness the
+                        // player earned by grinding the bestiary, which is worth showing off.
+                        if (multiplier > 1f)
+                        {
+                            flavor = DamageFlavor.Weakness;
+                        }
                     }
 
-                    damageable.TakeDamage(damage);
+                    damageable.TakeDamage(damage, flavor);
                     break;
                 }
             }
