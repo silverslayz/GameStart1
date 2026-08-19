@@ -31,6 +31,9 @@ namespace GameStart.EditorTools
         private const float ExhibitSpacing = 5f;
         private const int ExhibitsPerRow = 5;
 
+        /// <summary>Gap between the top of an exhibit and the bottom of its name plate.</summary>
+        private const float LabelClearance = 0.5f;
+
         /// <summary>Gameplay scripts that would otherwise make the exhibits attack or wander.</summary>
         private static readonly string[] BehavioursToDisable =
         {
@@ -262,7 +265,19 @@ namespace GameStart.EditorTools
         {
             var go = new GameObject("Label", typeof(TextMesh), typeof(DemoLabel));
             go.transform.SetParent(exhibit.transform, false);
-            go.transform.localPosition = Vector3.up * LabelHeight(exhibit);
+
+            // Positioned and sized in world terms, not the exhibit's. Prefab roots carry
+            // their own scale, so a local offset shrinks with the model - which sank the
+            // plates into the taller exhibits - and an inherited scale would make the text
+            // a different size on every stand.
+            Vector3 top = ExhibitTop(exhibit);
+            go.transform.position = new Vector3(top.x, top.y + LabelClearance, top.z);
+
+            Vector3 parentScale = exhibit.transform.lossyScale;
+            go.transform.localScale = new Vector3(
+                Mathf.Approximately(parentScale.x, 0f) ? 1f : 1f / parentScale.x,
+                Mathf.Approximately(parentScale.y, 0f) ? 1f : 1f / parentScale.y,
+                Mathf.Approximately(parentScale.z, 0f) ? 1f : 1f / parentScale.z);
 
             var mesh = go.GetComponent<TextMesh>();
             mesh.text = text;
@@ -277,8 +292,8 @@ namespace GameStart.EditorTools
             go.GetComponent<DemoLabel>().SetText(text);
         }
 
-        /// <summary>Height of the label above the exhibit's own pivot, clear of its head.</summary>
-        private static float LabelHeight(GameObject exhibit)
+        /// <summary>World point at the centre-top of everything the exhibit renders.</summary>
+        private static Vector3 ExhibitTop(GameObject exhibit)
         {
             Bounds bounds = default;
             bool has = false;
@@ -296,7 +311,12 @@ namespace GameStart.EditorTools
                 }
             }
 
-            return has ? bounds.max.y - exhibit.transform.position.y + 0.4f : 2.2f;
+            if (!has)
+            {
+                return exhibit.transform.position + Vector3.up * 2.2f;
+            }
+
+            return new Vector3(bounds.center.x, bounds.max.y, bounds.center.z);
         }
 
         private static void PlacePlayer()
