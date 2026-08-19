@@ -21,9 +21,14 @@ namespace GameStart.Player
         [Header("Camera")]
         [SerializeField] private Transform cameraTransform;
 
+        private const string SprintActionName = "Sprint";
+        private const string CrouchActionName = "Crouch";
+
         private CharacterController controller;
         private PlayerStamina stamina;
         private PlayerWeight weight;
+        private InputAction sprintAction;
+        private InputAction crouchAction;
 
         private Vector2 moveInput;
         private bool sprintHeld;
@@ -50,6 +55,18 @@ namespace GameStart.Player
             stamina = GetComponent<PlayerStamina>();
             weight = GetComponent<PlayerWeight>();
 
+            // Held buttons are polled rather than driven by OnSprint/OnCrouch messages.
+            // PlayerInput's Send Messages only forwards `canceled` for Value-type actions
+            // (PlayerInput.cs: "ATM we only care about performed and, in the case of value
+            // actions, canceled"), and these are Buttons - so the release never arrives and
+            // the flag latches on, turning hold into toggle.
+            var playerInput = GetComponent<PlayerInput>();
+            if (playerInput != null && playerInput.actions != null)
+            {
+                sprintAction = playerInput.actions.FindAction(SprintActionName);
+                crouchAction = playerInput.actions.FindAction(CrouchActionName);
+            }
+
             if (cameraTransform == null && Camera.main != null)
             {
                 cameraTransform = Camera.main.transform;
@@ -58,6 +75,8 @@ namespace GameStart.Player
 
         private void Update()
         {
+            ReadHeldButtons();
+
             if (isSwimming)
             {
                 MoveSwimming();
@@ -65,6 +84,24 @@ namespace GameStart.Player
             else
             {
                 MoveOnTerrain();
+            }
+        }
+
+        /// <summary>
+        /// Authoritative state for buttons whose meaning is "while held". Falls back to the
+        /// message-driven flags if the action can't be resolved, so a rig without PlayerInput
+        /// still moves.
+        /// </summary>
+        private void ReadHeldButtons()
+        {
+            if (sprintAction != null)
+            {
+                sprintHeld = sprintAction.IsPressed();
+            }
+
+            if (crouchAction != null)
+            {
+                crouchHeld = crouchAction.IsPressed();
             }
         }
 
@@ -177,14 +214,23 @@ namespace GameStart.Player
             moveInput = value.Get<Vector2>();
         }
 
+        // Kept as the fallback path for rigs without a resolvable Sprint/Crouch action.
+        // ReadHeldButtons overrides these whenever the actions are available, because the
+        // release half of these messages is never sent for Button actions.
         public void OnSprint(InputValue value)
         {
-            sprintHeld = value.isPressed;
+            if (sprintAction == null)
+            {
+                sprintHeld = value.isPressed;
+            }
         }
 
         public void OnCrouch(InputValue value)
         {
-            crouchHeld = value.isPressed;
+            if (crouchAction == null)
+            {
+                crouchHeld = value.isPressed;
+            }
         }
 
         public void OnJump(InputValue value)
