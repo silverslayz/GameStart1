@@ -38,7 +38,7 @@ namespace GameStart.EditorTools
         };
 
         [MenuItem("GameStart/Build Demo Room")]
-        public static void Build()
+        public static void BuildFromMenu()
         {
             if (!EditorUtility.DisplayDialog("Build Demo Room",
                     $"This creates (and overwrites) {ScenePath} with one of every prefab, labelled.\n\nContinue?",
@@ -47,7 +47,21 @@ namespace GameStart.EditorTools
                 return;
             }
 
-            var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            int count = Build();
+            EditorUtility.DisplayDialog("Demo Room", $"Built {count} labelled exhibits.\n\nSaved to {ScenePath}.", "OK");
+        }
+
+        /// <summary>
+        /// Builds and saves the room, returning how many exhibits it placed. No dialogs, so
+        /// it can be driven from a script or a build step as well as from the menu.
+        /// </summary>
+        public static int Build()
+        {
+            // Additive, and closed again once saved: whatever the author already had open
+            // stays open, and unsaved work in it is never at risk. Building Single would
+            // quietly take the current scene away from them.
+            var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
+            UnityEngine.SceneManagement.SceneManager.SetActiveScene(scene);
 
             BuildLighting();
             BuildFloor();
@@ -59,10 +73,11 @@ namespace GameStart.EditorTools
 
             Directory.CreateDirectory(Path.GetDirectoryName(ScenePath));
             EditorSceneManager.SaveScene(scene, ScenePath);
+            EditorSceneManager.CloseScene(scene, true);
             AssetDatabase.Refresh();
 
             Debug.Log($"Demo room built at {ScenePath}: {RoomTilesX}x{RoomTilesZ} tiles, {placed} labelled exhibits.");
-            EditorUtility.DisplayDialog("Demo Room", $"Built {placed} labelled exhibits.\n\nSaved to {ScenePath}.", "OK");
+            return placed;
         }
 
         // ------------------------------------------------------------------ room shell
