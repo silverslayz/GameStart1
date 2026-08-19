@@ -22,6 +22,7 @@ namespace GameStart.Player
         private PlayerClassSelection classSelection;
         private PlayerDungeonProgress dungeonProgress;
         private PlayerCurrency currency;
+        private UI.QuestLog questLog;
 
         private void Awake()
         {
@@ -34,6 +35,7 @@ namespace GameStart.Player
             classSelection = GetComponent<PlayerClassSelection>();
             dungeonProgress = GetComponent<PlayerDungeonProgress>();
             currency = GetComponent<PlayerCurrency>();
+            questLog = GetComponent<UI.QuestLog>();
 
             // Both live on scene canvases, so a prefab instance starts with these null.
             permadeathUi = SceneLink.Resolve(permadeathUi);
@@ -61,6 +63,9 @@ namespace GameStart.Player
             classSelection?.ResetSelection();
             dungeonProgress?.ResetProgress();
             currency?.ResetGems();
+            // Matches StartNewGame: a restarted run is a new character, so it starts the
+            // tutorial quest from zero rather than inheriting the dead run's progress.
+            questLog?.ResetObjectives();
 
             permadeathUi?.Hide();
             classSelectionUi?.RestartForNewRun();

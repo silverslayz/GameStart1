@@ -21,7 +21,10 @@ namespace GameStart.UI
         {
             if (questLog != null)
             {
+                // ObjectiveChanged only - not ObjectiveRestored. Loading a save with this
+                // objective already done must not replay the victory sequence.
                 questLog.ObjectiveChanged += OnObjectiveChanged;
+                questLog.ObjectivesReset += OnObjectivesReset;
             }
         }
 
@@ -30,7 +33,14 @@ namespace GameStart.UI
             if (questLog != null)
             {
                 questLog.ObjectiveChanged -= OnObjectiveChanged;
+                questLog.ObjectivesReset -= OnObjectivesReset;
             }
+        }
+
+        private void OnObjectivesReset()
+        {
+            // A new run can earn this again.
+            hasFired = false;
         }
 
         private void OnObjectiveChanged(int index)

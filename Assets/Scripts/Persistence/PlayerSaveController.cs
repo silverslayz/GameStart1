@@ -263,6 +263,9 @@ namespace GameStart.Persistence
 
             currency?.ResetGems();
             dungeonProgress?.ResetProgress();
+            // Without this a new character starts with the previous one's quest progress -
+            // and an already-complete objective fires its completion sequence on spawn.
+            questLog?.ResetObjectives();
         }
 
         private static SavedSlot ToSavedSlot(InventorySlot slot)
