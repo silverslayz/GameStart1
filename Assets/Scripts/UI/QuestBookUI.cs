@@ -26,6 +26,8 @@ namespace GameStart.UI
             if (questLog != null)
             {
                 questLog.ObjectiveChanged += OnObjectiveChanged;
+                // The book just displays progress, so it wants restored progress too.
+                questLog.ObjectiveRestored += OnObjectiveChanged;
                 questLog.QuestAdded += OnQuestAdded;
             }
         }
@@ -35,6 +37,7 @@ namespace GameStart.UI
             if (questLog != null)
             {
                 questLog.ObjectiveChanged -= OnObjectiveChanged;
+                questLog.ObjectiveRestored -= OnObjectiveChanged;
                 questLog.QuestAdded -= OnQuestAdded;
             }
         }
