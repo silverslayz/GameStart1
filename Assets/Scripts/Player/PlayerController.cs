@@ -10,7 +10,7 @@ namespace GameStart.Player
         [Header("Movement Speeds")]
         [SerializeField] private float walkSpeed = 4f;
         [SerializeField] private float jogSpeed = 5.5f;
-        [SerializeField] private float sprintSpeed = 8f;
+        [SerializeField] private float sprintSpeed = 11f;
         [SerializeField] private float swimSpeed = 4.5f;
         [SerializeField] private float crouchSpeed = 2f;
 
