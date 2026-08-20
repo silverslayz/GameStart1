@@ -8,7 +8,7 @@ namespace GameStart.CameraSystems
     {
         private const string PrefsKey = "CameraFieldOfView";
         public const float MinFov = 40f;
-        public const float MaxFov = 90f;
+        public const float MaxFov = 120f;
 
         private CinemachineCamera cmCamera;
         private float defaultFov;
