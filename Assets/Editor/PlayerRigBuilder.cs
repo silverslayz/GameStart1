@@ -27,6 +27,9 @@ namespace GameStart.EditorTools
         private const float CameraDistance = 6f;
         private const float CameraHeight = 1.4f;
 
+        /// <summary>Starting point, not a rule - scroll changes it and it's serialized.</summary>
+        private const float DefaultFieldOfView = 100f;
+
         [MenuItem("GameStart/Player/Swap Player To Placeholder Dummy")]
         public static void SwapPlayerModelFromMenu()
         {
@@ -210,7 +213,7 @@ namespace GameStart.EditorTools
 
             vcam.Target.TrackingTarget = target;
             vcam.Target.LookAtTarget = target;
-            vcam.Lens.FieldOfView = 55f;
+            vcam.Lens.FieldOfView = DefaultFieldOfView;
 
             var follow = vcam.GetComponent<CinemachineOrbitalFollow>();
             if (follow == null)
@@ -230,8 +233,31 @@ namespace GameStart.EditorTools
                 vcam.gameObject.AddComponent<CinemachineRotationComposer>();
             }
 
+            EnsureScrollZoom(vcam.gameObject);
             EnsureLookInput(vcam.gameObject);
             return vcam;
+        }
+
+        /// <summary>
+        /// Puts the scroll wheel on the lens rather than on camera distance. The component
+        /// supports both; on an orbital rig it defaults to moving the camera, which is not
+        /// what's wanted here.
+        /// </summary>
+        private static void EnsureScrollZoom(GameObject vcamObject)
+        {
+            var zoom = vcamObject.GetComponent<GameStart.CameraSystems.CameraZoomController>();
+            if (zoom == null)
+            {
+                zoom = vcamObject.AddComponent<GameStart.CameraSystems.CameraZoomController>();
+            }
+
+            var so = new SerializedObject(zoom);
+            var mode = so.FindProperty("zoomTarget");
+            if (mode != null)
+            {
+                mode.enumValueIndex = (int)GameStart.CameraSystems.CameraZoomController.ZoomTarget.FieldOfView;
+                so.ApplyModifiedPropertiesWithoutUndo();
+            }
         }
 
         /// <summary>
