@@ -23,9 +23,17 @@ namespace GameStart.EditorTools
         private const string VirtualCameraName = "CM Player Camera";
         private const string LookActionPath = "Player/Look";
 
-        // Behind and above the shoulder, looking at head height.
-        private const float CameraDistance = 6f;
-        private const float CameraHeight = 1.4f;
+        // Lifted from the Starter Assets PlayerFollowCamera prefab, which is the
+        // over-the-shoulder feel being asked for - just expressed with Cinemachine 3
+        // components instead of the deprecated 2.x ones that prefab still uses.
+        private static readonly Vector3 ShoulderOffset = new Vector3(1f, 0f, 0f);
+        private static readonly Vector3 FollowDamping = new Vector3(0.1f, 0.25f, 0.3f);
+        private const float CameraDistance = 4f;
+        private const float CameraSide = 0.6f;
+        private const float VerticalArmLength = 0f;
+
+        /// <summary>Keeps the camera out of walls; the orbit rig had nothing like it.</summary>
+        private const float CameraRadius = 0.3f;
 
         /// <summary>Starting point, not a rule - scroll changes it and it's serialized.</summary>
         private const float DefaultFieldOfView = 100f;
@@ -144,6 +152,7 @@ namespace GameStart.EditorTools
                 target = created.transform;
             }
 
+            EnsurePlayerLook(player);
             Camera brainCamera = EnsureMainCamera();
             CinemachineCamera vcam = EnsureVirtualCamera(target);
 
@@ -175,6 +184,15 @@ namespace GameStart.EditorTools
             instance.transform.position = new Vector3(0f, 0.1f, -14f);
             note = "Player: spawned from the prefab.";
             return instance;
+        }
+
+        /// <summary>The player turns its own camera target; the rig just follows it.</summary>
+        private static void EnsurePlayerLook(GameObject player)
+        {
+            if (player.GetComponent<GameStart.CameraSystems.PlayerCameraLook>() == null)
+            {
+                player.AddComponent<GameStart.CameraSystems.PlayerCameraLook>();
+            }
         }
 
         private static Camera EnsureMainCamera()
@@ -215,26 +233,46 @@ namespace GameStart.EditorTools
             vcam.Target.LookAtTarget = target;
             vcam.Lens.FieldOfView = DefaultFieldOfView;
 
-            var follow = vcam.GetComponent<CinemachineOrbitalFollow>();
+            // Third-person follow takes its orientation from the target's rotation rather
+            // than from its own axes, so PlayerCameraLook turns the target instead.
+            var orbital = vcam.GetComponent<CinemachineOrbitalFollow>();
+            if (orbital != null)
+            {
+                Object.DestroyImmediate(orbital);
+            }
+
+            var composer = vcam.GetComponent<CinemachineRotationComposer>();
+            if (composer != null)
+            {
+                Object.DestroyImmediate(composer);
+            }
+
+            var axes = vcam.GetComponent<CinemachineInputAxisController>();
+            if (axes != null)
+            {
+                // Its axes belonged to the orbit rig; nothing drives them now.
+                Object.DestroyImmediate(axes);
+            }
+
+            var follow = vcam.GetComponent<CinemachineThirdPersonFollow>();
             if (follow == null)
             {
-                follow = vcam.gameObject.AddComponent<CinemachineOrbitalFollow>();
+                follow = vcam.gameObject.AddComponent<CinemachineThirdPersonFollow>();
             }
 
-            // One ring rather than the default three: a plain shoulder orbit at a fixed
-            // height reads predictably, where the 3-ring rig swings the camera down as you
-            // look up and needs tuning to stop it clipping the floor.
-            follow.OrbitStyle = CinemachineOrbitalFollow.OrbitStyles.Sphere;
-            follow.Radius = CameraDistance;
-            follow.TargetOffset = Vector3.up * (CameraHeight - 1f);
-
-            if (vcam.GetComponent<CinemachineRotationComposer>() == null)
-            {
-                vcam.gameObject.AddComponent<CinemachineRotationComposer>();
-            }
+            follow.ShoulderOffset = ShoulderOffset;
+            follow.VerticalArmLength = VerticalArmLength;
+            follow.CameraDistance = CameraDistance;
+            follow.CameraSide = CameraSide;
+            follow.Damping = FollowDamping;
+            // Obstacle avoidance keeps the camera from clipping through walls; the orbit
+            // rig had nothing like it, which is part of why it felt worse indoors.
+            var avoid = follow.AvoidObstacles;
+            avoid.Enabled = true;
+            avoid.CameraRadius = CameraRadius;
+            follow.AvoidObstacles = avoid;
 
             EnsureScrollZoom(vcam.gameObject);
-            EnsureLookInput(vcam.gameObject);
             return vcam;
         }
 
