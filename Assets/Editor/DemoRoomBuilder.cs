@@ -19,6 +19,7 @@ namespace GameStart.EditorTools
     {
         private const string ScenePath = "Assets/Scenes/DemoRoom.unity";
         private const string KitFolder = "Assets/Prefabs/Dungeons/SunkenRuins";
+        private const string SkyMaterialPath = "Assets/AllSkyFree/Cartoon Base BlueSky/Day_BlueSky_Nothing.mat";
 
         // The kit is authored around 2-unit floor tiles and 3-unit walls.
         private const float TileSize = 2f;
@@ -94,8 +95,23 @@ namespace GameStart.EditorTools
             light.shadows = LightShadows.Soft;
             go.transform.rotation = Quaternion.Euler(50f, -30f, 0f);
 
-            RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
-            RenderSettings.ambientLight = new Color(0.32f, 0.35f, 0.42f);
+            var sky = AssetDatabase.LoadAssetAtPath<Material>(SkyMaterialPath);
+            if (sky != null)
+            {
+                // Light the room from the sky. Ambient has to follow the skybox or the
+                // room keeps the flat grey fill and the sky is just a painted backdrop.
+                RenderSettings.skybox = sky;
+                RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Skybox;
+                RenderSettings.ambientIntensity = 1f;
+                RenderSettings.defaultReflectionMode = UnityEngine.Rendering.DefaultReflectionMode.Skybox;
+                DynamicGI.UpdateEnvironment();
+            }
+            else
+            {
+                // No sky asset available: a flat fill still reads better than pitch black.
+                RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
+                RenderSettings.ambientLight = new Color(0.32f, 0.35f, 0.42f);
+            }
         }
 
         private static void BuildFloor()
