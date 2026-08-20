@@ -27,8 +27,41 @@ namespace GameStart.EditorTools
         private const float HillHeightMetres = 9f;
         private const int Seed = 1337;
 
+        // The terrain's palette. Each layer is a generated two-tone noise texture rather
+        // than an imported photo, so changing the look means changing these and repainting.
+        private static readonly Color GrassBase = new Color(0.31f, 0.44f, 0.20f);
+        private static readonly Color GrassDark = new Color(0.24f, 0.35f, 0.15f);
+        private static readonly Color DirtBase = new Color(0.42f, 0.31f, 0.20f);
+        private static readonly Color DirtDark = new Color(0.33f, 0.24f, 0.15f);
+        private static readonly Color RockBase = new Color(0.46f, 0.47f, 0.50f);
+        private static readonly Color RockDark = new Color(0.34f, 0.35f, 0.38f);
+
         private const string TextureDir = "Assets/Textures/Terrain";
         private const string LayerDir = "Assets/Terrain";
+
+        /// <summary>
+        /// Colours the terrain that's already there, without touching its heights. Sculpting
+        /// and painting were one action, which is no use once someone has shaped a landscape
+        /// by hand - the only way to colour it was to have it regenerated underneath you.
+        /// </summary>
+        [MenuItem("Aetherfall/Terrain/Paint Terrain (keep shape)")]
+        public static void PaintOnly()
+        {
+            Terrain terrain = Object.FindAnyObjectByType<Terrain>(FindObjectsInactive.Include);
+            if (terrain == null || terrain.terrainData == null)
+            {
+                Debug.LogError("TerrainSculptor: no Terrain in the scene.");
+                return;
+            }
+
+            Paint(terrain.terrainData);
+            terrain.drawInstanced = true;
+
+            EditorUtility.SetDirty(terrain.terrainData);
+            EditorUtility.SetDirty(terrain);
+            AssetDatabase.SaveAssets();
+            Debug.Log($"TerrainSculptor: painted {terrain.name} with {terrain.terrainData.terrainLayers.Length} layers; heights untouched.");
+        }
 
         [MenuItem("Aetherfall/Terrain/Sculpt and Paint Haven")]
         public static void Generate()
@@ -111,13 +144,14 @@ namespace GameStart.EditorTools
 
         private static void Paint(TerrainData td)
         {
-            TerrainLayer grass = BuildLayer("Grass", new Color(0.31f, 0.44f, 0.20f), new Color(0.24f, 0.35f, 0.15f));
-            TerrainLayer dirt = BuildLayer("Dirt", new Color(0.42f, 0.31f, 0.20f), new Color(0.33f, 0.24f, 0.15f));
+            TerrainLayer grass = BuildLayer("Grass", GrassBase, GrassDark);
+            TerrainLayer dirt = BuildLayer("Dirt", DirtBase, DirtDark);
+            TerrainLayer rock = BuildLayer("Rock", RockBase, RockDark);
 
-            td.terrainLayers = new[] { grass, dirt };
+            td.terrainLayers = new[] { grass, dirt, rock };
 
             int res = td.alphamapResolution;
-            float[,,] map = new float[res, res, 2];
+            float[,,] map = new float[res, res, 3];
 
             // Height range drives the altitude term; sampled once rather than per pixel.
             int hres = td.heightmapResolution;
@@ -150,8 +184,18 @@ namespace GameStart.EditorTools
                     // Whichever is stronger wins, so hill flanks AND crowns show earth.
                     float dirtWeight = Mathf.Clamp01(Mathf.Max(slopeTerm, altTerm * 0.75f));
 
-                    map[y, x, 0] = 1f - dirtWeight;
-                    map[y, x, 1] = dirtWeight;
+                    // Rock takes over where it gets genuinely steep or genuinely high. Without
+                    // it a mountain range reads as one huge mud slope.
+                    float rockSlope = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(28f, 42f, steep));
+                    float rockAlt = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.72f, 0.95f, altitude));
+                    float rockWeight = Mathf.Clamp01(Mathf.Max(rockSlope, rockAlt));
+
+                    // Rock is layered over the grass/dirt split rather than competing with it,
+                    // so the three always sum to 1 and the blend stays smooth.
+                    float remaining = 1f - rockWeight;
+                    map[y, x, 0] = remaining * (1f - dirtWeight);
+                    map[y, x, 1] = remaining * dirtWeight;
+                    map[y, x, 2] = rockWeight;
                 }
             }
 
