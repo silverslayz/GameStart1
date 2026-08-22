@@ -91,7 +91,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: d9a67cf96ccb7684489159e1d5fe269f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,6 +135,7 @@ MonoBehaviour:
   minFoodDrop: 1
   maxFoodDrop: 2
   respawnTime: 20
+  selfRespawn: 1
   questGemObjective: Collect F-rank gems from monsters near the starting town
   playerCurrency: {fileID: 0}
   playerResources: {fileID: 0}
